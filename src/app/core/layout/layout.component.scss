@@ -23,10 +23,7 @@
   z-index: 1;
   display: flex;
   flex-direction: column;
-
-  .container-fluid {
-    overflow-y: auto;
-  }
+  overflow-y: auto;
 }
 
 .bg-dark {
