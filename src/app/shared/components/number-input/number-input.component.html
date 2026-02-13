@@ -1,0 +1,25 @@
+@if(label.length){
+    <label [for]="id" class="form-label">{{ label }}</label>
+}
+
+<input #inputElement
+       [id]="id"
+       type="text"
+       inputmode="numeric"
+       class="form-control"
+       [ngClass]="{
+           'is-valid': validationClass === 'is-valid',
+           'is-invalid': validationClass === 'is-invalid'
+       }"
+       [placeholder]="placeholder"
+       [disabled]="disabled"
+       [readonly]="readonly"
+       [required]="required"
+       (input)="onInput($event)"
+       (blur)="onBlur()" />
+
+@if (ngControl?.control?.invalid && (ngControl?.control?.dirty || ngControl?.control?.touched)) {
+<div class="invalid-feedback">
+    {{ errorMessage }}
+</div>
+}
