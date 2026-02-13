@@ -1,0 +1,31 @@
+.min-height-200 {
+  height: 200px;
+}
+
+.sidenav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: var(--sidebar-width);
+  height: 96vh;
+  background-color: var(--sidebar-bg);
+  display: flex;
+  flex-direction: column;
+  z-index: 1030;
+  overflow-y: auto;
+  border-right: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.main-content {
+  margin-right: var(--sidebar-width);
+  height: 92vh;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.bg-dark {
+  background-color: #344767 !important;
+}

@@ -1,1 +1,31 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --sidebar-width: 240px;
+  --sidebar-bg: #ffffff;
+  --dark-bg: #1e1e2f;
+  --primary-accent: #5e72e4;
+  --body-bg: #f8f9fe;
+  --footer-bg: #f6f9fc;
+  --text-muted: #8898aa;
+  --transition: all 0.2s ease;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--body-bg);
+  color: #32325d;
+  line-height: 1.5;
+  overflow-x: hidden;
+  margin: 0;
+  font-family: "Vazirmatn";
+}
+
+.pointer-cursor{
+  cursor: pointer;
+}
