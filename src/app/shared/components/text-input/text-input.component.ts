@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, forwardRef, Input, Optional, Self } from '@angular/core';
+import { Component, forwardRef, input, Optional, Self, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 
 @Component({
@@ -16,27 +16,27 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/for
   ]
 })
 export class TextInputComponent implements ControlValueAccessor {
-  @Input() id: string = '';
-  @Input() label: string = '';
-  @Input() placeholder: string = '';
-  @Input() type: string = 'text';
-  @Input() readonly: boolean = false;
-  @Input() required: boolean = false;
+  id = input<string>('');
+  label = input<string>('');
+  placeholder = input<string>('');
+  type = input<string>('text');
+  readonly = input<boolean>(false);
+  required = input<boolean>(false);
 
-  value: string = '';
-  disabled: boolean = false;
+  value = signal<string>('');
+  disabled = signal<boolean>(false);
 
   private onChange: (value: string) => void = () => { };
   private onTouched: () => void = () => { };
 
-  constructor(@Optional() @Self() public ngControl: NgControl) {
+  constructor(@Optional() @Self() public ngControl: NgControl | null) {
     if (this.ngControl) {
       this.ngControl.valueAccessor = this;
     }
   }
 
   writeValue(value: string): void {
-    this.value = value || '';
+    this.value.set(value || '');
   }
 
   registerOnChange(fn: (value: string) => void): void {
@@ -48,13 +48,13 @@ export class TextInputComponent implements ControlValueAccessor {
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this.disabled = isDisabled;
+    this.disabled.set(isDisabled);
   }
 
   onInput(event: Event): void {
     const input = event.target as HTMLInputElement;
-    this.value = input.value;
-    this.onChange(this.value);
+    this.value.set(input.value);
+    this.onChange(this.value());
   }
 
   onBlur(): void {

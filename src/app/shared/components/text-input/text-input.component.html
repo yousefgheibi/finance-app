@@ -1,18 +1,18 @@
-@if(label.length){
-    <label [for]="id" class="form-label">{{ label }}</label>
+@if(label()){
+    <label [for]="id()" class="form-label">{{ label() }}</label>
 }
 
-<input [id]="id" 
-       [type]="type" class="form-control" 
+<input [id]="id()" 
+       [type]="type()" class="form-control" 
        [ngClass]="{
             'is-valid': validationClass === 'is-valid',
             'is-invalid': validationClass === 'is-invalid'
         }" 
-        [placeholder]="placeholder" 
-        [value]="value" 
-        [disabled]="disabled" 
-        [readonly]="readonly" 
-        [required]="required"
+        [placeholder]="placeholder()" 
+        [value]="value()" 
+        [disabled]="disabled()" 
+        [readonly]="readonly()" 
+        [required]="required()"
         (input)="onInput($event)" 
         (blur)="onBlur()" />
 

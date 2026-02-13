@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, Optional, Self, ViewChild, ElementRef } from '@angular/core';
+import { Component, Optional, Self, ViewChild, ElementRef, SimpleChanges, OnChanges, input, signal } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 @Component({
@@ -8,30 +8,37 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
   templateUrl: './number-input.component.html',
   styleUrl: './number-input.component.scss'
 })
-export class NumberInputComponent implements ControlValueAccessor {
-  @Input() id: string = '';
-  @Input() label: string = '';
-  @Input() placeholder: string = '';
-  @Input() readonly: boolean = false;
-  @Input() required: boolean = false;
-
+export class NumberInputComponent implements ControlValueAccessor, OnChanges {
   @ViewChild('inputElement') inputRef!: ElementRef<HTMLInputElement>;
 
-  disabled: boolean = false;
-  private rawValue: string = ''; // Stores the raw (unformatted) value
+  id = input<string>('');
+  label = input<string>('');
+  placeholder = input<string>('');
+  readonly = input<boolean>(false);
+  required = input<boolean>(false);
+  format = input<boolean>(false);
+
+  rawValue = signal<string>('');
+  disabled = signal<boolean>(false);
 
   private onChange: (value: string) => void = () => { };
   private onTouched: () => void = () => { };
 
-  constructor(@Optional() @Self() public ngControl: NgControl) {
+  constructor(@Optional() @Self() public ngControl: NgControl | null) {
     if (this.ngControl) {
       this.ngControl.valueAccessor = this;
     }
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['format'] && this.inputRef) {
+      this.inputRef.nativeElement.value = this.formatNumber(this.rawValue());
+    }
+  }
+
   writeValue(value: any): void {
-    this.rawValue = value != null ? String(value) : '';
-    const formatted = this.formatNumber(this.rawValue);
+    this.rawValue.set(value != null ? String(value) : '');
+    const formatted = this.formatNumber(this.rawValue());
     if (this.inputRef) {
       this.inputRef.nativeElement.value = formatted;
     }
@@ -46,17 +53,17 @@ export class NumberInputComponent implements ControlValueAccessor {
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this.disabled = isDisabled;
+    this.disabled.set(isDisabled);
   }
 
   onInput(event: Event): void {
     const inputEl = event.target as HTMLInputElement;
 
-    this.rawValue = this.parseNumber(inputEl.value);
-    const formatted = this.formatNumber(this.rawValue);
+    this.rawValue.set(this.parseNumber(inputEl.value));
+    const formatted = this.formatNumber(this.rawValue());
 
     inputEl.value = formatted;
-    this.onChange(this.rawValue);
+    this.onChange(this.rawValue());
   }
 
   onBlur(): void {
@@ -66,6 +73,7 @@ export class NumberInputComponent implements ControlValueAccessor {
   // Formatting helpers
   private formatNumber(value: string): string {
     if (!value) return '';
+    if (!this.format()) return value;
 
     const parts = value.split('.');
     let integerPart = parts[0];
@@ -113,12 +121,14 @@ export class NumberInputComponent implements ControlValueAccessor {
     switch (firstErrorKey) {
       case 'required':
         return 'این فیلد الزامی است.';
-      case 'email':
-        return 'لطفا یک آدرس ایمیل معتبر وارد کنید.';
       case 'minlength':
         return `حداقل طول باید ${errors['minlength']?.requiredLength} کاراکتر باشد.`;
       case 'maxlength':
         return `حداکثر طول باید ${errors['maxlength']?.requiredLength} کاراکتر باشد.`;
+      case 'min':
+        return `حداقل مقدار باید ${errors['min']?.requiredValue} باشد.`;
+      case 'max':
+        return `حداکثر مقدار باید ${errors['max']?.requiredValue} باشد.`;
       default:
         return 'این فیلد نامعتبر است.';
     }
