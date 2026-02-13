@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { LayoutComponent } from './layout/layout.component';
 import { RouterModule, Routes } from '@angular/router';
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
-import { FooterComponent } from "./layout/footer/footer.component";
 import { HeaderComponent } from './layout/header/header.component';
 
 const routes: Routes = [
@@ -21,7 +20,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [LayoutComponent, SidebarComponent,FooterComponent, HeaderComponent],
+  declarations: [LayoutComponent, SidebarComponent, HeaderComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes)
