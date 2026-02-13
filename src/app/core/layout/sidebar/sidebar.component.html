@@ -1,0 +1,27 @@
+<div class="sidenav-header p-4">
+  <a class="navbar-brand m-0" routerLink="/">
+    <span class="ms-1 font-weight-bold">نرم افزار مدیریت هزینه</span>
+  </a>
+</div>
+<hr class="horizontal dark mt-0">
+
+<div class="w-auto ps">
+  <ul class="navbar-nav">
+    <li class="nav-item mb-1" *ngFor="let item of navItems">
+      <a class="nav-link"
+         [routerLink]="item.path"
+         routerLinkActive="active"
+         [routerLinkActiveOptions]="{ exact: true }">
+      <i class="fa {{ item.icon }} text-sm opacity-75"></i>
+        <span class="text-muted">{{ item.label }}</span>
+      </a>
+    </li>
+
+    <li class="nav-item mb-1 mt-auto">
+      <a class="nav-link">
+      <i class="fa fa-sign-out text-danger text-sm opacity-75"></i>
+        <span class="text-danger">خروج</span>
+      </a>
+    </li>
+  </ul>
+</div>
