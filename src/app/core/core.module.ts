@@ -4,6 +4,7 @@ import { LayoutComponent } from './layout/layout.component';
 import { RouterModule, Routes } from '@angular/router';
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { HeaderComponent } from './layout/header/header.component';
+import { PopoverComponent } from '../shared/components/popover/popover.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,7 @@ const routes: Routes = [
   declarations: [LayoutComponent, SidebarComponent, HeaderComponent],
   imports: [
     CommonModule,
+    PopoverComponent,
     RouterModule.forChild(routes)
 ],
   exports: [LayoutComponent,

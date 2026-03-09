@@ -20,7 +20,6 @@ export class SidebarComponent {
     { path: '/dashboard', icon: 'fa-tv', label: 'داشبورد' },
     { path: '/transactions', icon: 'fa-credit-card', label: 'تراکنش‌ها' },
     { path: '/categories', icon: 'fa-list-alt', label: 'دسته بندی‌ها' },
-    { path: '/reminders', icon: 'fa-calendar', label: 'یادآوری‌ها و اعلان‌ها' },
     { path: '/settings', icon: 'fa-cog', label: 'تنظیمات' },
   ];
 

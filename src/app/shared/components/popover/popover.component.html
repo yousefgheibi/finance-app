@@ -1,0 +1,13 @@
+<div class="popover-wrapper">
+
+  <div class="popover-trigger" (click)="toggle()">
+    <ng-content select="[popoverTrigger]"></ng-content>
+  </div>
+
+  @if (isOpen()) {
+    <div class="popover-body">
+      <ng-content select="[popoverContent]"></ng-content>
+    </div>
+  }
+
+</div>
