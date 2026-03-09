@@ -1,1 +1,53 @@
-<p>login works!</p>
+<div class="container-fluid">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-md-4 d-flex flex-column align-items-center my-auto">
+            <h3 class="mt-2">{{isLoginPage() ? 'ورود' : 'ثبت نام'}}</h3>
+            <div class="login-form w-100">
+                @if (isLoginPage()) {
+                <form [formGroup]="loginForm" (ngSubmit)="login()">
+                    <div class="mt-4">
+                        <app-number-input placeholder="شماره تلفن" formControlName="phoneNumber" />
+                    </div>
+                    <div class="mt-4">
+                        <app-text-input placeholder="رمز عبور" type="password" formControlName="password" />
+                    </div>
+
+                    <div class="form-group mt-4">
+                        <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">ورود به
+                            پنل</button>
+                        <div class="mt-2">
+                            <p>حساب کاربری ندارید؟ همین حالا <a (click)="isLoginPage.set(false)"
+                                    class="text-pramry">ثبت‌نام</a> کنید!</p>
+                        </div>
+                    </div>
+                </form>
+                }
+                @else {
+                <form [formGroup]="signUpForm" (ngSubmit)="signUp()">
+                    <div class="mt-4">
+                        <app-text-input placeholder="نام و نام خانوادگی" type="text" formControlName="name" />
+                    </div>
+                    <div class="mt-4">
+                        <app-number-input placeholder="کد ملی" formControlName="nationalCode" />
+                    </div>
+                    <div class="mt-4">
+                        <app-number-input placeholder="شماره تلفن" formControlName="phoneNumber" />
+                    </div>
+                    <div class="mt-4">
+                        <app-text-input placeholder="رمز عبور" type="password" formControlName="password" />
+                    </div>
+
+                    <div class="form-group mt-4">
+                        <button type="submit" class="btn btn-primary p-2" [disabled]="!signUpForm.valid">ثبت
+                            نام</button>
+                        <div class="mt-2">
+                            <p>حساب کاربری دارید؟ <a (click)="isLoginPage.set(true)" class="text-pramry"> ورود به حساب
+                                    کاربری</a></p>
+                        </div>
+                    </div>
+                </form>
+                }
+            </div>
+        </div>
+    </div>
+</div>

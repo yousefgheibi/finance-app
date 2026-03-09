@@ -6,14 +6,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/for
   selector: 'app-text-input',
   imports: [CommonModule],
   templateUrl: './text-input.component.html',
-  styleUrls: ['./text-input.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => TextInputComponent),
-      multi: true
-    }
-  ]
+  styleUrls: ['./text-input.component.scss']
 })
 export class TextInputComponent implements ControlValueAccessor {
   id = input<string>('');
