@@ -32,7 +32,8 @@ export class LoginComponent implements OnInit {
     );
 
     this.signUpForm = this.formbuilder.group({
-      name: [null, [Validators.required]],
+      firstName: [null, [Validators.required]],
+      lastName: [null, [Validators.required]],
       nationalCode: [null],
       phoneNumber: [null, [Validators.required]],
       password: [null, [Validators.required]]
@@ -49,7 +50,7 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.authService.login(this.loginForm.value).subscribe({
+    this.authService.login(this.loginForm.getRawValue()).subscribe({
       next: (user) => {
         this.router.navigate(['/dashboard']);
       },
@@ -66,7 +67,7 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.authService.signUp(this.signUpForm.value).subscribe({
+    this.authService.signUp(this.signUpForm.getRawValue()).subscribe({
       next: () => {
         alert('ثبت نام با موفقیت انجام شد');
         this.isLoginPage.set(true);

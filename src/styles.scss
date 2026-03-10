@@ -79,6 +79,85 @@ body {
   cursor: pointer;
 }
 
-.text-left{
+.text-left {
   text-align: left;
+}
+
+/* Font Size */
+
+.font-small {
+  font-size: 12px;
+}
+
+.font-medium {
+  font-size: 14px;
+}
+
+.font-large {
+  font-size: 18px;
+}
+
+.font-xlarge {
+  font-size: 22px;
+}
+
+
+/* Theme Colors */
+
+[data-theme="blue"] {
+  --primary-color: #344767;
+}
+
+[data-theme="green"] {
+  --primary-color: #008000;
+}
+
+[data-theme="red"] {
+  --primary-color: #F54927;
+}
+
+.text-primary {
+  color: var(--primary-color) !important;
+}
+
+.bg-primary {
+  background-color: var(--primary-color) !important;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: color-mix(in srgb, var(--primary-color) 85%, black);
+  border-color: color-mix(in srgb, var(--primary-color) 85%, black);
+}
+
+.btn-primary:focus {
+  box-shadow: 0 0 0 0.1rem rgba(0, 0, 0, 0.15);
+}
+
+.btn-primary:active {
+  background-color: color-mix(in srgb, var(--primary-color) 70%, black);
+  border-color: color-mix(in srgb, var(--primary-color) 70%, black);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-outline-primary {
+  background: transparent;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+
+.btn-outline-primary:hover {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: #fff;
 }

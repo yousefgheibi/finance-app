@@ -2,10 +2,13 @@
   "users": [
     {
       "id": "4f54",
-      "name": "یوسف غیبی",
+      "firstName": "یوسف",
+      "lastName": "غیبی",
       "nationalCode": "1234567890",
       "phoneNumber": "09214536991",
-      "password": "12345678"
+      "password": "12345678",
+      "mobileConfirm": false,
+      "emailConfirm": true
     }
   ]
 }

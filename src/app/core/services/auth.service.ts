@@ -79,4 +79,44 @@ export class AuthService {
 
         this.router.navigate(['/login']);
     }
+
+    updateUser(data: Partial<IUserDto>) {
+        const currentUser = this._user();
+
+        if (!currentUser) {
+            throw new Error('User not logged in');
+        }
+
+        return this.http.patch<IUserDto>(`${this.api}/${currentUser.id}`, data).pipe(
+            tap(updatedUser => {
+                const newUser = { ...currentUser, ...updatedUser };
+
+                localStorage.setItem('user', JSON.stringify(newUser));
+                this._user.set(newUser);
+            })
+        );
+    }
+
+    changePassword(data: { currentPassword: string; newPassword: string }) {
+        const currentUser = this._user();
+
+        if (!currentUser) {
+            throw new Error('User not logged in');
+        }
+
+        if (currentUser.password !== data.currentPassword) {
+            throw new Error('Current password is incorrect');
+        }
+
+        return this.http.patch<IUserDto>(`${this.api}/${currentUser.id}`, {
+            password: data.newPassword
+        }).pipe(
+            tap(updatedUser => {
+                const newUser = { ...currentUser, ...updatedUser };
+
+                localStorage.setItem('user', JSON.stringify(newUser));
+                this._user.set(newUser);
+            })
+        );
+    }
 }

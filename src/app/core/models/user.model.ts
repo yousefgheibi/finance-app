@@ -1,6 +1,7 @@
 export interface IUserDto {
     id?: number;
-    name: string;
+    firstName: string;
+    lastName: string;
     nationalCode?: string;
     phoneNumber: string;
     password: string;

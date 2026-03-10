@@ -1,5 +1,8 @@
 @if(label()){
     <label [for]="id()" class="form-label mb-1">{{ label() }}</label>
+    @if (required() || ngControl?.control?.hasError('required')) {
+        <span class="text-danger">*</span>
+    }
 }
 
 <input [id]="id()" 

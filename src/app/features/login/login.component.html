@@ -1,15 +1,15 @@
 <div class="container-fluid">
-    <div class="row justify-content-center align-items-center">
+    <div class="row justify-content-center align-items-center pt-5">
         <div class="col-md-4 d-flex flex-column align-items-center my-auto">
             <h3 class="mt-2">{{isLoginPage() ? 'ورود' : 'ثبت نام'}}</h3>
             <div class="login-form w-100">
                 @if (isLoginPage()) {
                 <form [formGroup]="loginForm" (ngSubmit)="login()">
                     <div class="mt-4">
-                        <app-number-input placeholder="شماره تلفن" formControlName="phoneNumber" />
+                        <app-number-input label="شماره تلفن" formControlName="phoneNumber" />
                     </div>
                     <div class="mt-4">
-                        <app-text-input placeholder="رمز عبور" type="password" formControlName="password" />
+                        <app-text-input label="رمز عبور" type="password" formControlName="password" />
                     </div>
 
                     <div class="form-group mt-4">
@@ -24,17 +24,22 @@
                 }
                 @else {
                 <form [formGroup]="signUpForm" (ngSubmit)="signUp()">
-                    <div class="mt-4">
-                        <app-text-input placeholder="نام و نام خانوادگی" type="text" formControlName="name" />
-                    </div>
-                    <div class="mt-4">
-                        <app-number-input placeholder="کد ملی" formControlName="nationalCode" />
-                    </div>
-                    <div class="mt-4">
-                        <app-number-input placeholder="شماره تلفن" formControlName="phoneNumber" />
-                    </div>
-                    <div class="mt-4">
-                        <app-text-input placeholder="رمز عبور" type="password" formControlName="password" />
+                    <div class="row">
+                        <div class="col-6 mt-4">
+                            <app-text-input label="نام" type="text" formControlName="firstName" />
+                        </div>
+                        <div class="col-6 mt-4">
+                            <app-text-input label="نام خانوادگی" type="text" formControlName="lastName" />
+                        </div>
+                        <div class="col-12 mt-4">
+                            <app-number-input label="کد ملی" formControlName="nationalCode" />
+                        </div>
+                        <div class="col-12 mt-4">
+                            <app-number-input label="شماره تلفن" formControlName="phoneNumber" />
+                        </div>
+                        <div class="col-12 mt-4">
+                            <app-text-input label="رمز عبور" type="password" formControlName="password" />
+                        </div>
                     </div>
 
                     <div class="form-group mt-4">

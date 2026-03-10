@@ -1,0 +1,136 @@
+<div class="container">
+    <div class="row shadow-sm rounded-4 px-3 px-md-6 py-4 py-md-6 bg-white justify-content-between">
+        <div class="col-11">
+            <span class="text-primary fw-semibold fs--20px">اطلاعات شخصی</span>
+        </div>
+        <div class="col-1 d-flex align-items-center cursor-pointer">
+            @if (profileForm.disabled) {
+            <button class="btn d-flex align-items-center" (click)="profileForm.enable()">
+                <i class="fa-solid opacity-75 fa-pencil text-primary mx-1"></i>
+                <span class="fs--14px text-primary">ویرایش</span>
+            </button>
+            }
+        </div>
+
+        <form class="row m-0 p-0 gy-4" [formGroup]="profileForm" (ngSubmit)="submit()">
+            <input type="text" formControlName="id" hidden>
+            <div class="col-md-6">
+                <app-text-input label="نام" type="text" formControlName="firstName" />
+            </div>
+            <div class="col-md-6">
+                <app-text-input label="نام خانوادگی" type="text" formControlName="lastName" />
+            </div>
+            <div class="col-md-6">
+                <app-text-input label="شماره موبایل" type="text" formControlName="phoneNumber" />
+            </div>
+            <div class="col-md-6">
+                <app-text-input label="کد ملی" type="text" formControlName="nationalCode" />
+            </div>
+            @if (!profileForm.disabled) {
+            <div class="col-md-12 text-left mt-4">
+                <button class="btn btn-outline-primary mx-2" type="button"
+                    (click)="profileForm.disable()">انصراف</button>
+                <button class="btn btn-primary" type="submit">ذخیره</button>
+            </div>
+            }
+        </form>
+    </div>
+
+    <div class="row my-3 justify-content-between">
+        <div class="col-md-9 ps-3">
+            <div class="row shadow-sm rounded-4 px-3 px-md-6 py-4 py-md-6 bg-white">
+
+                <div class="col-12 mb-3">
+                    <span class="text-primary fw-semibold fs--20px">اطلاعات ظاهری</span>
+                </div>
+
+                <div class="col-12 mb-4">
+                    <label class="form-label fw-semibold">اندازه فونت</label>
+
+                    <div class="d-flex gap-4">
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="fontSize" value="small"
+                                (change)="setFontSize('small')" [checked]="fontSize === 'small'">
+                            <label class="form-check-label">12px</label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="fontSize" value="medium"
+                                (change)="setFontSize('medium')" [checked]="fontSize === 'medium'">
+                            <label class="form-check-label">14px</label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="fontSize" value="large"
+                                (change)="setFontSize('large')" [checked]="fontSize === 'large'">
+                            <label class="form-check-label">20px</label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="fontSize" value="xlarge"
+                                (change)="setFontSize('xlarge')" [checked]="fontSize === 'xlarge'">
+                            <label class="form-check-label">22px</label>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="col-12">
+                    <label class="form-label fw-semibold">رنگ اصلی</label>
+
+                    <div class="d-flex gap-4">
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="theme" value="blue"
+                                (change)="setTheme('blue')" [checked]="theme === 'blue'">
+                            <label class="form-check-label">آبی</label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="theme" value="green"
+                                (change)="setTheme('green')" [checked]="theme === 'green'">
+                            <label class="form-check-label">سبز</label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="theme" value="red"
+                                (change)="setTheme('red')" [checked]="theme === 'red'">
+                            <label class="form-check-label">قرمز</label>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-3 pe-4">
+            <div
+                class="row shadow-sm rounded-4 px-3 px-md-6 py-5 bg-white h-100 d-flex align-items-center justify-content-center">
+                <div class="col-12 text-center">
+                    <button class="btn btn-primary">تغییر رمز عبور</button>
+                </div>
+                <!-- <div class="col-11">
+                    <span class="text-primary fw-semibold fs--20px">تغییر رمز عبور</span>
+                </div>
+                <form class="row m-0 p-0 gy-4" [formGroup]="passwordForm" (ngSubmit)="changePassword()">
+                    <div class="col-md-12">
+                        <app-text-input label="رمز عبور فعلی" type="password" formControlName="currentPassword" />
+                    </div>
+                    <div class="col-md-12">
+                        <app-text-input label="رمز عبور جدید" type="password" formControlName="newPassword" />
+                    </div>
+
+                    <div class="col-md-12">
+                        <app-text-input label="تکرار رمز عبور جدید" type="password" formControlName="confirmPassword" />
+                    </div>
+                    <div class="col-md-12 text-left mt-4">
+                        <button class="btn btn-primary" type="submit">تغییر رمز عبور</button>
+                    </div>
+                </form> -->
+            </div>
+        </div>
+    </div>
+
+</div>
