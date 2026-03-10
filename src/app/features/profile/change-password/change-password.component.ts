@@ -2,7 +2,7 @@ import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
 import { TextInputComponent } from '../../../shared/components/text-input/text-input.component';
-import { ModalService } from '../../../shared/components/services/modal.service';
+import { ModalService } from '../../../shared/services/modal.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({

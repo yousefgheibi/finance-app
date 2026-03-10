@@ -3,7 +3,7 @@ import { TextInputComponent } from '../../shared/components/text-input/text-inpu
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
 import { ChangePasswordComponent } from './change-password/change-password.component';
-import { ModalService } from '../../shared/components/services/modal.service';
+import { ModalService } from '../../shared/services/modal.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
