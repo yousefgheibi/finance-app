@@ -20,7 +20,7 @@ export class SidebarComponent {
     { path: '/dashboard', icon: 'fa-tv', label: 'داشبورد' },
     { path: '/transactions', icon: 'fa-credit-card', label: 'تراکنش‌ها' },
     { path: '/categories', icon: 'fa-list-alt', label: 'دسته بندی‌ها' },
-    { path: '/settings', icon: 'fa-cog', label: 'تنظیمات' },
+    { path: '/profile', icon: 'fa-user-circle', label: 'تنظیمات' },
   ];
 
   logout(): void {

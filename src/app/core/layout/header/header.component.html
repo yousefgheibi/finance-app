@@ -1,22 +1,22 @@
-<nav class="navbar navbar-expand-lg">
+<nav class="navbar navbar-expand-lg mb-2">
   <div class="container-fluid">
-    <span class="text-white">داشبورد</span>
+    <span class="text-white">{{pageTitle()}}</span>
     <div class="collapse navbar-collapse">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <app-popover>
           <li class="nav-item d-flex align-items-center p-2 bg-white rounded-3 pointer-cursor" popoverTrigger>
             <i class="fa fa-user ms-sm-1 text-primary fs-6"></i>
-            <span class="text-primary">{{ authService.user()?.name }}</span>
+            <span class="text-primary">{{ authService.user()?.firstName }} {{authService.user()?.lastName}}</span>
           </li>
           <div popoverContent>
             <ul class="p-0">
-              <li class="nav-item d-flex align-items-center mb-2" (click)="goToProfile()">
-                <i class="fa fa-cog ms-sm-1 text-primary text-sm opacity-75"></i>
-                <span class="text-primary text-sm">تنظیمات</span>
+              <li class="nav-item d-flex align-items-center mb-3 pointer-cursor" (click)="goToProfile()">
+                <i class="fa fa-cog ms-sm-1 text-primary fs--14px opacity-75"></i>
+                <span class="text-primary fs--14px">تنظیمات</span>
               </li>
-              <li class="nav-item d-flex align-items-center" (click)="logout()">
-                <i class="fa fa-sign-out ms-sm-1 text-danger text-sm opacity-75"></i>
-                <span class="text-danger text-sm">خروج</span>
+              <li class="nav-item d-flex align-items-center pointer-cursor" (click)="logout()">
+                <i class="fa fa-sign-out ms-sm-1 text-danger fs--14px opacity-75"></i>
+                <span class="text-danger fs--14px">خروج</span>
               </li>
             </ul>
           </div>

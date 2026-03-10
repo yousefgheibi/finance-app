@@ -12,9 +12,18 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       {
-        path: '',
+        path: 'dashboard',
         loadComponent: () => import('../features/dashboard/dashboard.component')
-          .then(m => m.DashboardComponent)
+          .then(m => m.DashboardComponent),
+        title: 'داشبورد',
+        data: { title: 'داشبورد' }
+      },
+      {
+        path: 'profile',
+        loadComponent: () => import('../features/profile/profile.component')
+          .then(m => m.ProfileComponent),
+        title: 'پروفایل کاربری',
+        data: { title: 'پروفایل کاربری' }
       }
     ],
   },

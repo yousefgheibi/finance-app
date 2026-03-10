@@ -9,6 +9,13 @@
   --transition: all 0.2s ease;
   --bs-primary: #344767;
   --bs-primary-rgb: 52, 71, 103;
+  --bs-btn-bg: #344767;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none;
+  }
 }
 
 *,
@@ -28,7 +35,7 @@ body {
   font-family: "Vazirmatn";
 }
 
-.pointer-cursor{
+.pointer-cursor {
   cursor: pointer;
 }
 
@@ -47,4 +54,31 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #34476724;
+}
+
+.btn-primary {
+  background-color: var(--bs-primary);
+  border-color: var(--bs-primary);
+}
+
+.btn-primary:hover {
+  background-color: var(--bs-primary);
+  border-color: var(--bs-primary);
+  opacity: 0.85;
+}
+
+.fs--20px {
+  font-size: 20px;
+}
+
+.fs--14px {
+  font-size: 14px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.text-left{
+  text-align: left;
 }
