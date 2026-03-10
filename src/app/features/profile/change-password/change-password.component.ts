@@ -4,6 +4,7 @@ import { AuthService } from '../../../core/services/auth.service';
 import { TextInputComponent } from '../../../shared/components/text-input/text-input.component';
 import { ModalService } from '../../../shared/services/modal.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ToastService } from '../../../shared/services/toast.service';
 
 @Component({
   selector: 'app-change-password',
@@ -20,6 +21,7 @@ export class ChangePasswordComponent implements OnInit {
   private readonly authService = inject(AuthService);
   private readonly modalService = inject(ModalService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly toastService = inject(ToastService);
 
   ngOnInit(): void {
     this.passwordForm = this.formbuilder.group({
@@ -31,7 +33,7 @@ export class ChangePasswordComponent implements OnInit {
 
   protected changePassword() {
     if (this.passwordForm.value.newPassword !== this.passwordForm.value.confirmPassword) {
-      alert('رمز عبور جدید و تکرار آن مطابقت ندارند.');
+      this.toastService.warning('رمز عبور جدید و تکرار آن مطابقت ندارند.');
       return;
     }
     this.authService.changePassword(this.passwordForm.getRawValue())
@@ -40,10 +42,10 @@ export class ChangePasswordComponent implements OnInit {
         next: () => {
           this.passwordForm.reset();
           this.modalService.close();
-          alert('تغییر رمز عبور با موفقیت انجام شد.');
+          this.toastService.success('تغییر رمز عبور با موفقیت انجام شد.');
         },
         error: () => {
-          alert('خطا در تغییر رمز عبور');
+          this.toastService.error('خطا در تغییر رمز عبور');
         }
       });
   }

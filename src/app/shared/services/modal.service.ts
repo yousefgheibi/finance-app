@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { ModalConfig } from '../models/modal-config';
+import { ModalConfig } from '../models/modal.config';
 
 @Injectable({
     providedIn: 'root'

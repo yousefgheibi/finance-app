@@ -56,25 +56,6 @@ body {
   background: #34476724;
 }
 
-.btn-primary {
-  background-color: var(--bs-primary);
-  border-color: var(--bs-primary);
-}
-
-.btn-primary:hover {
-  background-color: var(--bs-primary);
-  border-color: var(--bs-primary);
-  opacity: 0.85;
-}
-
-.fs--20px {
-  font-size: 20px;
-}
-
-.fs--14px {
-  font-size: 14px;
-}
-
 .cursor-pointer {
   cursor: pointer;
 }
@@ -84,6 +65,14 @@ body {
 }
 
 /* Font Size */
+
+.fs--20px {
+  font-size: 20px;
+}
+
+.fs--14px {
+  font-size: 14px;
+}
 
 .font-small {
   font-size: 12px;
@@ -146,6 +135,8 @@ body {
 }
 
 .btn-primary:disabled {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
   opacity: 0.6;
   cursor: not-allowed;
 }

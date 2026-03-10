@@ -1,0 +1,8 @@
+<div class="toast-container">
+    @for (toast of toastService.toasts(); track $index) {
+    <div [ngClass]="'toast ' + toast.type">
+        {{ toast.message }}
+        <button class="close-btn" (click)="toastService.remove(toast.id)">×</button>
+    </div>
+    }
+</div>

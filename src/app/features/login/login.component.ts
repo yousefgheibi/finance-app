@@ -6,6 +6,7 @@ import { TextInputComponent } from '../../shared/components/text-input/text-inpu
 import { AuthService } from '../../core/services/auth.service';
 import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ToastService } from '../../shared/services/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -24,6 +25,7 @@ export class LoginComponent implements OnInit {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly toastService = inject(ToastService);
 
   ngOnInit() {
     this.loginForm = this.formbuilder.group(
@@ -59,7 +61,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/dashboard']);
         },
         error: () => {
-          alert('شماره موبایل یا رمز اشتباه است');
+          this.toastService.error('شماره موبایل یا رمز اشتباه است');
         }
       });
   }
@@ -75,11 +77,11 @@ export class LoginComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {
-          alert('ثبت نام با موفقیت انجام شد');
+          this.toastService.success('ثبت نام با موفقیت انجام شد');
           this.isLoginPage.set(true);
         },
         error: () => {
-          alert('خطا در ثبت نام');
+          this.toastService.error('خطا در ثبت نام');
         }
       });
   }

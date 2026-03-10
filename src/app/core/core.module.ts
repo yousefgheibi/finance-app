@@ -24,6 +24,13 @@ const routes: Routes = [
           .then(m => m.ProfileComponent),
         title: 'پروفایل کاربری',
         data: { title: 'پروفایل کاربری' }
+      },
+      {
+        path: 'categories',
+        loadComponent: () => import('../features/categories/categories.component')
+          .then(m => m.CategoriesComponent),
+        title: 'دسته بندی‌ها',
+        data: { title: 'دسته بندی‌ها' }
       }
     ],
   },

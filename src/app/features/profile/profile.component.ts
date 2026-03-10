@@ -5,6 +5,7 @@ import { AuthService } from '../../core/services/auth.service';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ModalService } from '../../shared/services/modal.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ToastService } from '../../shared/services/toast.service';
 
 @Component({
   selector: 'app-profile',
@@ -22,6 +23,7 @@ export class ProfileComponent implements OnInit {
   private readonly authService = inject(AuthService);
   private readonly modalService = inject(ModalService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly toastService = inject(ToastService);
 
   ngOnInit(): void {
     this.profileForm = this.formbuilder.group({
@@ -54,10 +56,10 @@ export class ProfileComponent implements OnInit {
       .subscribe({
         next: () => {
           this.profileForm.disable();
-          alert('ویرایش اطلاعات با موفقیت انجام شد.');
+          this.toastService.success('ویرایش اطلاعات با موفقیت انجام شد.');
         },
         error: () => {
-          alert('خطا در ویرایش اطلاعات');
+          this.toastService.error('خطا در ویرایش اطلاعات');
         }
       });
   }
