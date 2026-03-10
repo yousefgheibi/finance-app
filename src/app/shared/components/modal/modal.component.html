@@ -1,0 +1,18 @@
+@if (config()) {
+
+<div class="modal-backdrop">
+    <div class="modal-container" [ngClass]="config()?.size || 'md'">
+        <div class="modal-header">
+            <h5>{{ config()?.title }}</h5>
+            <button class="close-btn" (click)="close()">✕</button>
+        </div>
+
+        <div class="modal-body">
+            <ng-container *ngComponentOutlet="config()?.component!">
+            </ng-container>
+        </div>
+    </div>
+
+</div>
+
+}

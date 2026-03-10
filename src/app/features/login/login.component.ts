@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NumberInputComponent } from "../../shared/components/number-input/number-input.component";
 import { TextInputComponent } from '../../shared/components/text-input/text-input.component';
 import { AuthService } from '../../core/services/auth.service';
 import { Router } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +23,7 @@ export class LoginComponent implements OnInit {
   private readonly formbuilder = inject(FormBuilder);
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly destroyRef = inject(DestroyRef);
 
   ngOnInit() {
     this.loginForm = this.formbuilder.group(
@@ -50,14 +52,16 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.authService.login(this.loginForm.getRawValue()).subscribe({
-      next: (user) => {
-        this.router.navigate(['/dashboard']);
-      },
-      error: () => {
-        alert('شماره موبایل یا رمز اشتباه است');
-      }
-    });
+    this.authService.login(this.loginForm.getRawValue())
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (user) => {
+          this.router.navigate(['/dashboard']);
+        },
+        error: () => {
+          alert('شماره موبایل یا رمز اشتباه است');
+        }
+      });
   }
 
 
@@ -67,15 +71,17 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.authService.signUp(this.signUpForm.getRawValue()).subscribe({
-      next: () => {
-        alert('ثبت نام با موفقیت انجام شد');
-        this.isLoginPage.set(true);
-      },
-      error: () => {
-        alert('خطا در ثبت نام');
-      }
-    });
+    this.authService.signUp(this.signUpForm.getRawValue())
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          alert('ثبت نام با موفقیت انجام شد');
+          this.isLoginPage.set(true);
+        },
+        error: () => {
+          alert('خطا در ثبت نام');
+        }
+      });
   }
 }
 

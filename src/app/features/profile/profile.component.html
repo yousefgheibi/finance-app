@@ -109,26 +109,8 @@
             <div
                 class="row shadow-sm rounded-4 px-3 px-md-6 py-5 bg-white h-100 d-flex align-items-center justify-content-center">
                 <div class="col-12 text-center">
-                    <button class="btn btn-primary">تغییر رمز عبور</button>
+                    <button class="btn btn-primary" (click)="openChangePasswordModal()">تغییر رمز عبور</button>
                 </div>
-                <!-- <div class="col-11">
-                    <span class="text-primary fw-semibold fs--20px">تغییر رمز عبور</span>
-                </div>
-                <form class="row m-0 p-0 gy-4" [formGroup]="passwordForm" (ngSubmit)="changePassword()">
-                    <div class="col-md-12">
-                        <app-text-input label="رمز عبور فعلی" type="password" formControlName="currentPassword" />
-                    </div>
-                    <div class="col-md-12">
-                        <app-text-input label="رمز عبور جدید" type="password" formControlName="newPassword" />
-                    </div>
-
-                    <div class="col-md-12">
-                        <app-text-input label="تکرار رمز عبور جدید" type="password" formControlName="confirmPassword" />
-                    </div>
-                    <div class="col-md-12 text-left mt-4">
-                        <button class="btn btn-primary" type="submit">تغییر رمز عبور</button>
-                    </div>
-                </form> -->
             </div>
         </div>
     </div>

@@ -1,7 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { TextInputComponent } from '../../shared/components/text-input/text-input.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ModalService } from '../../shared/components/services/modal.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-profile',
@@ -12,14 +15,13 @@ import { AuthService } from '../../core/services/auth.service';
 export class ProfileComponent implements OnInit {
 
   protected profileForm!: FormGroup;
-  protected passwordForm!: FormGroup;
-
   protected fontSize: string = 'medium';
   protected theme: string = 'blue';
 
-
   private readonly formbuilder = inject(FormBuilder);
   private readonly authService = inject(AuthService);
+  private readonly modalService = inject(ModalService);
+  private readonly destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
     this.profileForm = this.formbuilder.group({
@@ -34,12 +36,6 @@ export class ProfileComponent implements OnInit {
     this.profileForm.patchValue(this.authService.user()!);
     this.profileForm.disable();
 
-    this.passwordForm = this.formbuilder.group({
-      currentPassword: [null, [Validators.required]],
-      newPassword: [null, [Validators.required]],
-      confirmPassword: [null, [Validators.required]]
-    });
-
     const savedFont = localStorage.getItem('fontSize');
     const savedTheme = localStorage.getItem('themeColor');
 
@@ -53,31 +49,17 @@ export class ProfileComponent implements OnInit {
   }
 
   protected submit() {
-    this.authService.updateUser(this.profileForm.getRawValue()).subscribe({
-      next: () => {
-        this.profileForm.disable();
-        alert('ویرایش اطلاعات با موفقیت انجام شد.');
-      },
-      error: () => {
-        alert('خطا در ویرایش اطلاعات');
-      }
-    });
-  }
-
-  protected changePassword() {
-    if (this.passwordForm.value.newPassword !== this.passwordForm.value.confirmPassword) {
-      alert('رمز عبور جدید و تکرار آن مطابقت ندارند.');
-      return;
-    }
-    this.authService.changePassword(this.passwordForm.value).subscribe({
-      next: () => {
-        this.passwordForm.reset();
-        alert('تغییر رمز عبور با موفقیت انجام شد.');
-      },
-      error: () => {
-        alert('خطا در تغییر رمز عبور');
-      }
-    });
+    this.authService.updateUser(this.profileForm.getRawValue())
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.profileForm.disable();
+          alert('ویرایش اطلاعات با موفقیت انجام شد.');
+        },
+        error: () => {
+          alert('خطا در ویرایش اطلاعات');
+        }
+      });
   }
 
   protected setFontSize(size: 'small' | 'medium' | 'large' | 'xlarge') {
@@ -89,5 +71,13 @@ export class ProfileComponent implements OnInit {
   protected setTheme(color: 'blue' | 'green' | 'red') {
     localStorage.setItem('themeColor', color);
     document.body.setAttribute('data-theme', color);
+  }
+
+  protected openChangePasswordModal() {
+    this.modalService.open({
+      component: ChangePasswordComponent,
+      title: 'تغییر رمز عبور',
+      size: 'md'
+    });
   }
 }
