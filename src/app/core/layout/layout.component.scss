@@ -18,10 +18,14 @@
 
 .main-content {
   margin-right: var(--sidebar-width);
-  height: 92vh;
+  height: 100vh;
   position: relative;
-  z-index: 1;
+  z-index: 1030;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+}
+
+.container-fluid{
+  height: calc(96vh - 70px);
 }

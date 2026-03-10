@@ -6,12 +6,12 @@
 .popover-body {
   position: absolute;
   top: 105%;
-  left: 0;
+  // left: 0;
   min-width: 140px;
   background: white;
   border: 1px solid #dee2e6;
   border-radius: 6px;
-  padding: 12px;
+  padding: 4px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.15);
   z-index: 1000;
 }
