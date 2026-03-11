@@ -1,0 +1,15 @@
+<form class="row m-0 p-0" [formGroup]="dataForm"
+    (ngSubmit)="data() ? update(dataForm.getRawValue()) : add(dataForm.getRawValue())">
+    <div class="col-md-12 mb-4">
+        <input type="text" formControlName="id" hidden>
+        <app-text-input label="نام بانک" type="text" formControlName="bankName" />
+    </div>
+    <div class="col-md-12">
+        <app-text-input label="شماره کارت" type="text" formControlName="cardNumber" />
+    </div>
+
+    <div class="col-md-12 text-left mt-4">
+        <button class="btn btn-outline-primary mx-1" type="button" (click)="close()">بستن</button>
+        <button class="btn btn-primary" type="submit" [disabled]="dataForm.invalid">تایید</button>
+    </div>
+</form>

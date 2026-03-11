@@ -31,6 +31,13 @@ const routes: Routes = [
           .then(m => m.CategoriesComponent),
         title: 'دسته بندی‌ها',
         data: { title: 'دسته بندی‌ها' }
+      },
+      {
+        path: 'my-credit-cards',
+        loadComponent: () => import('../features/cards/cards.component')
+          .then(m => m.CardsComponent),
+        title: 'کارت‌های من',
+        data: { title: 'کارت‌های من' }
       }
     ],
   },

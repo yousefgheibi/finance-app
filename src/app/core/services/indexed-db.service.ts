@@ -5,10 +5,10 @@ import { Injectable } from '@angular/core';
 })
 export class IndexedDbService {
 
-  private dbName = 'app-db';
+  private dbName = 'app-db2';
   private db!: IDBDatabase;
 
-  private stores = ['categories', 'transactions'];
+  private stores = ['categories', 'transactions', 'cards'];
 
   async init(): Promise<void> {
     return new Promise((resolve, reject) => {

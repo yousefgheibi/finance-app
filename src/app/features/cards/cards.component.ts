@@ -1,28 +1,28 @@
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { TableComponent } from '../../shared/components/table/table.component';
-import { TextInputComponent } from "../../shared/components/text-input/text-input.component";
+import { TextInputComponent } from '../../shared/components/text-input/text-input.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { CategoriesService } from '../../core/services/categories.service';
-import { ICategoryDto } from '../../core/models/category.model';
-import { TableColumn } from '../../shared/models/table.config';
-import { finalize } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ToastService } from '../../shared/services/toast.service';
 import { ModalService } from '../../shared/services/modal.service';
-import { DataFormComponent } from './data-form/data-form.component';
 import { ExcelService } from '../../core/services/excel.service';
+import { ICreditCardDto } from '../../core/models/credit-card.model';
+import { TableColumn } from '../../shared/models/table.config';
+import { CreditCardService } from '../../core/services/card.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { finalize } from 'rxjs';
+import { CreditCardDataFormComponent } from './data-form/credit-card-data-form.component';
 
 @Component({
-  selector: 'app-categories',
+  selector: 'app-cards',
   imports: [TableComponent, TextInputComponent, FormsModule, CommonModule],
-  templateUrl: './categories.component.html',
+  templateUrl: './cards.component.html',
   styles: '',
-  providers: [CategoriesService]
+  providers: [CreditCardService]
 })
-export class CategoriesComponent implements OnInit {
+export class CardsComponent implements OnInit {
 
-  private readonly entityService = inject(CategoriesService);
+  private readonly entityService = inject(CreditCardService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly toastService = inject(ToastService);
   private readonly modalService = inject(ModalService);
@@ -30,12 +30,12 @@ export class CategoriesComponent implements OnInit {
 
   protected searchTerm: string = '';
   protected loading = signal(false);
-  protected data: ICategoryDto[] = [];
-  protected filteredData = signal<ICategoryDto[]>([]);
+  protected data: ICreditCardDto[] = [];
+  protected filteredData = signal<ICreditCardDto[]>([]);
   protected readonly columns: TableColumn[] = [
     { key: 'id', label: 'شناسه', class: 'mw-75px' },
-    { key: 'name', label: 'نام دسته‌بندی' },
-    { key: 'description', label: 'توضیحات' }
+    { key: 'bankName', label: 'نام بانک' },
+    { key: 'cardNumber', label: 'شماره کارت' }
   ];
 
   ngOnInit(): void {
@@ -56,7 +56,7 @@ export class CategoriesComponent implements OnInit {
     this.entityService.loadData()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (data: ICategoryDto[]) => {
+        next: (data: ICreditCardDto[]) => {
           this.data = data;
           this.filteredData.set(data);
         },
@@ -67,7 +67,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   protected delete(id: number) {
-    this.entityService.deleteCategory(id)
+    this.entityService.deleteCard(id)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {
@@ -81,10 +81,10 @@ export class CategoriesComponent implements OnInit {
       });
   }
 
-  protected openDataFormModal(item?: ICategoryDto) {
+  protected openDataFormModal(item?: ICreditCardDto) {
     this.modalService.open({
-      component: DataFormComponent,
-      title: item ? 'ویرایش دسته بندی' : 'افزودن دسته بندی جدید',
+      component: CreditCardDataFormComponent,
+      title: item ? 'ویرایش کارت' : 'افزودن کارت جدید',
       size: 'md',
       data: item,
       afterClose: () => this.loadData()
@@ -102,6 +102,6 @@ export class CategoriesComponent implements OnInit {
 
   protected excelExport() {
     this.toastService.info('شروع دریافت خروجی اکسل');
-    this.excelService.exportToCsv(this.filteredData(),'categories');
+    this.excelService.exportToCsv(this.filteredData(), 'my-credit-cards');
   }
 }
