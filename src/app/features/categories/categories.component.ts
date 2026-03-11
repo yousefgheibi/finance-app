@@ -105,7 +105,7 @@ export class CategoriesComponent implements OnInit {
     this.excelService.exportToCsv(this.filteredData(),'categories');
   }
 
-  protected openFilterModal() {
-    alert('method not implement.')
-  }
+  // protected openFilterModal() {
+  //   alert('method not implement.')
+  // }
 }
