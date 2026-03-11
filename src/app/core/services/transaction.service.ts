@@ -26,7 +26,14 @@ export class TransactionService {
 
     addNewTransaction(item: ITransactionDto) {
         return from(
-            this.db.add('transactions', item)
+            this.db.add('transactions', {
+                type: item.type,
+                categoryName: item.categoryName,
+                cardName: item.cardName,
+                description: item.description,
+                createdAt: item.createdAt,
+                price: item.price
+            })
         );
     }
 

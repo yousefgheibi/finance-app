@@ -1,0 +1,25 @@
+<form class="row m-0 p-0" [formGroup]="dataForm"
+    (ngSubmit)="data() ? update() : add()">
+    <div class="col-md-6 mb-4">
+        <input type="text" formControlName="id" hidden>
+        <app-select label="نوع تراکنش" formControlName="type" [options]="transactionsType()" />
+    </div>
+    <div class="col-md-6">
+        <app-select label="دسته بندی" formControlName="categoryName" [options]="categoriesType()!" />
+    </div>
+    <div class="col-md-6 mb-4">
+        <app-select label="کارت" formControlName="cardName" [options]="creditCardsType()!" />
+    </div>
+    <div class="col-md-6">
+        <app-number-input label="مبلغ" formControlName="price" />
+    </div>
+
+    <div class="col-md-12">
+        <app-text-input label="توضیحات" formControlName="description" />
+    </div>
+
+    <div class="col-md-12 text-left mt-4">
+        <button class="btn btn-outline-primary mx-1" type="button" (click)="close()">بستن</button>
+        <button class="btn btn-primary" type="submit" [disabled]="dataForm.invalid">تایید</button>
+    </div>
+</form>

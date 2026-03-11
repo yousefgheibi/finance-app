@@ -10,6 +10,7 @@ import { ModalService } from '../../shared/services/modal.service';
 import { ExcelService } from '../../core/services/excel.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { finalize } from 'rxjs';
+import { TransactionDataFormComponent } from './transaction-data-form/transaction-data-form.component';
 
 @Component({
   selector: 'app-transactions',
@@ -33,7 +34,7 @@ export class TransactionsComponent implements OnInit {
   protected readonly columns: TableColumn[] = [
     { key: 'type', label: 'نوع' },
     { key: 'categoryName', label: 'دسته‌بندی' },
-    { key: 'price', label: 'مبلغ' },
+    { key: 'price', label: 'مبلغ', formatter: (value: string) => Number(value).toLocaleString() + ' تومان' },
     { key: 'cardName', label: 'شماره کارت' },
     { key: 'createdAt', label: 'تاریخ ایجاد' },
     { key: 'description', label: 'توضیحات' }
@@ -83,7 +84,13 @@ export class TransactionsComponent implements OnInit {
   }
 
   protected openDataFormModal(item?: ITransactionDto) {
-    throw new Error('Method not implemented.');
+    this.modalService.open({
+      component: TransactionDataFormComponent,
+      title: item ? 'ویرایش تراکنش' : 'افزودن تراکنش جدید',
+      size: 'md',
+      data: item,
+      afterClose: () => this.loadData()
+    })
   }
 
   protected onSearch() {
