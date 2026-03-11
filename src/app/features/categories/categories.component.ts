@@ -11,6 +11,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ToastService } from '../../shared/services/toast.service';
 import { ModalService } from '../../shared/services/modal.service';
 import { DataFormComponent } from './data-form/data-form.component';
+import { ExcelService } from '../../core/services/excel.service';
 
 @Component({
   selector: 'app-categories',
@@ -25,10 +26,12 @@ export class CategoriesComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   private readonly toastService = inject(ToastService);
   private readonly modalService = inject(ModalService);
+  private readonly excelService = inject(ExcelService);
 
   protected searchTerm: string = '';
   protected loading = signal(false);
   protected data: ICategoryDto[] = [];
+  protected filteredData = signal<ICategoryDto[]>([]);
   protected readonly columns: TableColumn[] = [
     { key: 'id', label: 'شناسه', class: 'mw-75px' },
     { key: 'name', label: 'نام دسته‌بندی' },
@@ -55,6 +58,7 @@ export class CategoriesComponent implements OnInit {
       .subscribe({
         next: (data: ICategoryDto[]) => {
           this.data = data;
+          this.filteredData.set(data);
         },
         error: () => {
           this.toastService.error('خطا در دریافت اطلاعات');
@@ -69,6 +73,7 @@ export class CategoriesComponent implements OnInit {
         next: () => {
           this.toastService.success(`رکورد '${id}' با موفقیت حذف شد.`);
           this.loadData();
+          this.onSearch();
         },
         error: () => {
           this.toastService.error('خطا در حذف رکورد');
@@ -87,11 +92,17 @@ export class CategoriesComponent implements OnInit {
   }
 
   protected onSearch() {
-    alert('method not implement.')
+    const term = this.searchTerm.toLowerCase();
+
+    this.filteredData.set(
+      this.data.filter(item =>
+        Object.values(item).some(value => String(value).toLowerCase().includes(term))
+      ));
   }
 
   protected excelExport() {
-    alert('method not implement.')
+    this.toastService.info('شروع دریافت خروجی اکسل');
+    this.excelService.exportToCsv(this.filteredData(),'categories');
   }
 
   protected openFilterModal() {
