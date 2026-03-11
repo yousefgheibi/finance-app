@@ -34,17 +34,6 @@
   padding: 6px 12px;
 }
 
-.table-wrapper {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.table-container {
-  overflow-y: auto;
-  max-height: 600px;
-}
-
 table {
   width: 100%;
   border-collapse: collapse;
@@ -63,7 +52,7 @@ thead tr {
 }
 
 tbody {
-  height: 480px;
+  height: 410px;
   overflow-y: auto;
 }
 
@@ -87,7 +76,7 @@ thead th {
 .table-container {
   flex: 1;
   overflow-y: auto;
-  max-height: 600px;
+  max-height: calc(100vh - 220px);
 }
 
 thead th {
@@ -118,4 +107,15 @@ th {
 
 td {
   font-size: 14px;
+}
+
+.table-loading {
+  // position: absolute;
+  height: 435px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  margin-top: 50px;
 }

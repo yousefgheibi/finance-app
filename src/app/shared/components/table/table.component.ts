@@ -1,11 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, contentChild, input, signal, TemplateRef } from '@angular/core';
 import { PopoverComponent } from '../popover/popover.component';
-
-export interface TableColumn {
-  key: string;
-  label: string;
-}
+import { TableColumn } from '../../models/table.config';
 
 @Component({
   selector: 'app-table',
@@ -19,7 +15,7 @@ export class TableComponent {
   columns = input<TableColumn[]>([]);
   data = input<any[]>([]);
   loading = input<boolean>(true);
-  pageSize = input<number>(15);
+  pageSize = input<number>(10);
 
   actionsTemplate = contentChild<TemplateRef<any>>('actions');
   currentPage = signal(1);
