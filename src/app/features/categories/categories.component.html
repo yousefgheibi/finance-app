@@ -1,1 +1,37 @@
-<p>categories works!</p>
+<div class="d-flex flex-column h-100">
+    <div class="card shadow-sm mb-2 rounded-4 border-0">
+        <div class="card-body p-2">
+            <div class="row">
+                <div class="col-7">
+                    <app-text-input class="w-100" placeholder="جستجو" type="search" [(ngModel)]="searchTerm"
+                        (ngModelChange)="onSearch()" />
+                </div>
+                <div class="col-5 text-left">
+                    <button class="btn btn-outline-primary" (click)="excelExport()"><i
+                            class="fa-solid fa-file-export"></i></button>
+                    <button class="btn btn-primary mx-1" (click)="openFilterModal()"><i
+                            class="fa-solid fa-filter"></i></button>
+                    <button class="btn btn-outline-primary" (click)="openDataFormModal()">
+                        <i class="fa fa-plus"></i>
+                        افزودن دسته بندی</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm flex-column-fluid rounded-4 border-0">
+        <div class="card-body p-0 border-0 d-flex flex-column">
+            <app-table [columns]="columns" [data]="data" [loading]="loading()">
+                <ng-template #actions let-row>
+                    <li class="list-group-item border-0 text-right px-2 pointer-cursor"
+                        (click)="openDataFormModal(row)">
+                        <i class="fa fa-edit text-warning"></i> ویرایش
+                    </li>
+                    <li class="list-group-item border-0 text-right px-2 pointer-cursor"
+                        (click)="deleteCategory(row.id)">
+                        <i class="fa fa-trash text-danger"></i> حذف
+                    </li>
+                </ng-template>
+            </app-table>
+        </div>
+    </div>

@@ -13,6 +13,10 @@ export class ModalService {
     }
 
     close() {
+        const current = this.modalState();
+        if (current?.afterClose) {
+            current.afterClose();
+        }
         this.modalState.set(null);
     }
 

@@ -5,4 +5,5 @@ export interface ModalConfig<T = any> {
     title?: string;
     size?: 'sm' | 'md' | 'lg' | 'xl';
     data?: any;
+    afterClose?: () => void;
 }

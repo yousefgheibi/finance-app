@@ -1,0 +1,15 @@
+<form class="row m-0 p-0" [formGroup]="dataForm"
+    (ngSubmit)="data() ? updateCategory(dataForm.getRawValue()) : addNewCategory(dataForm.getRawValue())">
+    <div class="col-md-12 mb-4">
+        <input type="text" formControlName="id" hidden>
+        <app-text-input label="نام" type="text" formControlName="name" />
+    </div>
+    <div class="col-md-12">
+        <app-text-input label="توضیحات" type="text" formControlName="description" />
+    </div>
+
+    <div class="col-md-12 text-left mt-4">
+        <button class="btn btn-outline-primary mx-1" type="button" (click)="close()">بستن</button>
+        <button class="btn btn-primary" type="submit" [disabled]="dataForm.invalid">تایید</button>
+    </div>
+</form>
