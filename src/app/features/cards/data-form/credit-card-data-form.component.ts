@@ -6,10 +6,12 @@ import { ToastService } from '../../../shared/services/toast.service';
 import { TextInputComponent } from '../../../shared/components/text-input/text-input.component';
 import { ICreditCardDto } from '../../../core/models/credit-card.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CreditCardDirective } from '../../../shared/directives/credit-card.directive';
+import { NumberInputComponent } from '../../../shared/components/number-input/number-input.component';
 
 @Component({
   selector: 'app-credit-card-data-form',
-  imports: [TextInputComponent, ReactiveFormsModule],
+  imports: [TextInputComponent, ReactiveFormsModule, CreditCardDirective, NumberInputComponent],
   templateUrl: './credit-card-data-form.component.html',
   styles: '',
   providers: [CreditCardService]
@@ -30,7 +32,7 @@ export class CreditCardDataFormComponent implements OnInit {
     this.dataForm = this.formbuilder.group({
       id: [null],
       bankName: [null, [Validators.required]],
-      cardNumber: [null, [Validators.required]],
+      cardNumber: [null, [Validators.required, Validators.minLength(16)]],
     });
 
     this.data.set(this.modalService.modalState()?.data);

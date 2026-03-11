@@ -32,4 +32,9 @@ export class TableComponent {
   changePage(page: number) {
     this.currentPage.set(page);
   }
+
+  formatValue(col: any, row: any) {
+    const value = row[col.key];
+    return col.formatter ? col.formatter(value, row) : value;
+  }
 }

@@ -12,13 +12,14 @@ import { CreditCardService } from '../../core/services/card.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { finalize } from 'rxjs';
 import { CreditCardDataFormComponent } from './data-form/credit-card-data-form.component';
+import { CreditCardPipe } from '../../shared/pipes/credit-card.pipe';
 
 @Component({
   selector: 'app-cards',
   imports: [TableComponent, TextInputComponent, FormsModule, CommonModule],
   templateUrl: './cards.component.html',
   styles: '',
-  providers: [CreditCardService]
+  providers: [CreditCardService, CreditCardPipe]
 })
 export class CardsComponent implements OnInit {
 
@@ -27,6 +28,7 @@ export class CardsComponent implements OnInit {
   private readonly toastService = inject(ToastService);
   private readonly modalService = inject(ModalService);
   private readonly excelService = inject(ExcelService);
+  private readonly creditCardPipe = inject(CreditCardPipe);
 
   protected searchTerm: string = '';
   protected loading = signal(false);
@@ -35,7 +37,7 @@ export class CardsComponent implements OnInit {
   protected readonly columns: TableColumn[] = [
     { key: 'id', label: 'شناسه', class: 'mw-75px' },
     { key: 'bankName', label: 'نام بانک' },
-    { key: 'cardNumber', label: 'شماره کارت' }
+    { key: 'cardNumber', label: 'شماره کارت', class: 'dir-ltr text-right', formatter: (value: string) => this.creditCardPipe.transform(value) }
   ];
 
   ngOnInit(): void {

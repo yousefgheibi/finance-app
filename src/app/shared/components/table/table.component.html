@@ -29,7 +29,7 @@
             </app-popover>
           </td>
           @for (col of columns(); track $index) {
-          <td [ngClass]="col.class">{{ row[col.key] }}</td>
+          <td [ngClass]="col?.class">{{ formatValue(col, row) }}</td>
           }
         </tr>
         }
