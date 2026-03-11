@@ -38,6 +38,13 @@ const routes: Routes = [
           .then(m => m.CardsComponent),
         title: 'کارت‌های من',
         data: { title: 'کارت‌های من' }
+      },
+      {
+        path: 'transactions',
+        loadComponent: () => import('../features/transactions/transactions.component')
+          .then(m => m.TransactionsComponent),
+        title: 'تراکنش‌ها',
+        data: { title: 'تراکنش‌ها' }
       }
     ],
   },
@@ -49,7 +56,7 @@ const routes: Routes = [
     CommonModule,
     PopoverComponent,
     RouterModule.forChild(routes)
-],
+  ],
   exports: [LayoutComponent,
     RouterModule]
 })
