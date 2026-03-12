@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { Component, Optional, Self, ViewChild, ElementRef, SimpleChanges, OnChanges, input, signal } from '@angular/core';
+import { Component, Optional, Self, input, signal, computed } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 @Component({
   selector: 'app-number-input',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './number-input.component.html',
   styleUrl: './number-input.component.scss'
 })
-export class NumberInputComponent implements ControlValueAccessor, OnChanges {
-  @ViewChild('inputElement') inputRef!: ElementRef<HTMLInputElement>;
+export class NumberInputComponent implements ControlValueAccessor {
 
   id = input<string>('');
   label = input<string>('');
@@ -21,6 +21,10 @@ export class NumberInputComponent implements ControlValueAccessor, OnChanges {
   rawValue = signal<string>('');
   disabled = signal<boolean>(false);
 
+  displayValue = computed(() => {
+    return this.formatNumber(this.rawValue());
+  });
+
   private onChange: (value: string) => void = () => { };
   private onTouched: () => void = () => { };
 
@@ -30,18 +34,8 @@ export class NumberInputComponent implements ControlValueAccessor, OnChanges {
     }
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['format'] && this.inputRef) {
-      this.inputRef.nativeElement.value = this.formatNumber(this.rawValue());
-    }
-  }
-
   writeValue(value: any): void {
     this.rawValue.set(value != null ? String(value) : '');
-    const formatted = this.formatNumber(this.rawValue());
-    if (this.inputRef) {
-      this.inputRef.nativeElement.value = formatted;
-    }
   }
 
   registerOnChange(fn: (value: string) => void): void {
@@ -57,13 +51,12 @@ export class NumberInputComponent implements ControlValueAccessor, OnChanges {
   }
 
   onInput(event: Event): void {
-    const inputEl = event.target as HTMLInputElement;
+    const input = event.target as HTMLInputElement;
 
-    this.rawValue.set(this.parseNumber(inputEl.value));
-    const formatted = this.formatNumber(this.rawValue());
+    const parsed = this.parseNumber(input.value);
+    this.rawValue.set(parsed);
 
-    inputEl.value = formatted;
-    this.onChange(this.rawValue());
+    this.onChange(parsed);
   }
 
   onBlur(): void {

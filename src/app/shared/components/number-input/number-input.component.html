@@ -5,7 +5,7 @@
     }
 }
 
-<input #inputElement
+<input 
        [id]="id()"
        type="text"
        dir="ltr"
@@ -16,6 +16,7 @@
            'is-invalid': validationClass === 'is-invalid'
        }"
        [placeholder]="placeholder()"
+       [value]="displayValue()"
        [disabled]="disabled()"
        [readonly]="readonly()"
        [required]="required()"

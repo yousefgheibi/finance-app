@@ -5,6 +5,7 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
 @Component({
   selector: 'app-text-input',
   imports: [CommonModule],
+  standalone: true,
   templateUrl: './text-input.component.html',
   styleUrls: ['./text-input.component.scss']
 })
