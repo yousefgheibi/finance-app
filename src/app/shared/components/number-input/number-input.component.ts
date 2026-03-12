@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, Optional, Self, input, signal, computed } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 
+type NumberInputType = 'number' | 'price' | 'card';
+
 @Component({
   selector: 'app-number-input',
   standalone: true,
@@ -12,17 +14,26 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
 export class NumberInputComponent implements ControlValueAccessor {
 
   id = input<string>('');
+  type = input<NumberInputType>('number');
   label = input<string>('');
   placeholder = input<string>('');
   readonly = input<boolean>(false);
   required = input<boolean>(false);
-  format = input<boolean>(false);
 
   rawValue = signal<string>('');
   disabled = signal<boolean>(false);
 
   displayValue = computed(() => {
-    return this.formatNumber(this.rawValue());
+    const value = this.rawValue();
+
+    switch (this.type()) {
+      case 'price':
+        return this.formatPrice(value);
+      case 'card':
+        return this.formatCard(value);
+      default:
+        return value;
+    }
   });
 
   private onChange: (value: string) => void = () => { };
@@ -52,11 +63,21 @@ export class NumberInputComponent implements ControlValueAccessor {
 
   onInput(event: Event): void {
     const input = event.target as HTMLInputElement;
+    let value = input.value;
 
-    const parsed = this.parseNumber(input.value);
-    this.rawValue.set(parsed);
+    switch (this.type()) {
+      case 'price':
+        value = this.parseNumber(value);
+        break;
+      case 'card':
+        value = this.parseCard(value);
+        break;
+      default:
+        value = this.parseNumber(value);
+    }
 
-    this.onChange(parsed);
+    this.rawValue.set(value);
+    this.onChange(value);
   }
 
   onBlur(): void {
@@ -64,19 +85,6 @@ export class NumberInputComponent implements ControlValueAccessor {
   }
 
   // Formatting helpers
-  private formatNumber(value: string): string {
-    if (!value) return '';
-    if (!this.format()) return value;
-
-    const parts = value.split('.');
-    let integerPart = parts[0];
-    const decimalPart = parts.length > 1 ? '.' + parts[1] : '';
-
-    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-    return integerPart + decimalPart;
-  }
-
   private parseNumber(formatted: string): string {
     let raw = '';
     let decimalFound = false;
@@ -89,6 +97,23 @@ export class NumberInputComponent implements ControlValueAccessor {
       }
     }
     return raw;
+  }
+
+  private parseCard(value: string): string {
+    return value.replace(/\D/g, '').slice(0, 16);
+  }
+
+  private formatPrice(value: string): string {
+    if (!value) return '';
+    const [integerPart, decimalPart] = value.split('.');
+    const formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return decimalPart !== undefined ? `${formattedInteger}.${decimalPart}` : formattedInteger;
+  }
+
+  private formatCard(value: string): string {
+    if (!value) return '';
+    const parts = value.match(/.{1,4}/g);
+    return parts ? parts.join(' ') : value;
   }
 
   get validationClass(): string {
