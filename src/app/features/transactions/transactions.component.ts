@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { TableComponent } from '../../shared/components/table/table.component';
 import { TextInputComponent } from '../../shared/components/text-input/text-input.component';
 import { FormsModule } from '@angular/forms';
@@ -23,7 +23,8 @@ import { CreditCardService } from '../../core/services/card.service';
   imports: [TableComponent, TextInputComponent, FormsModule],
   templateUrl: './transactions.component.html',
   styles: '',
-  providers: [TransactionService, PersianDatePipe, CategoriesService, CreditCardService]
+  providers: [TransactionService, PersianDatePipe, CategoriesService, CreditCardService],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TransactionsComponent implements OnInit {
 

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NumberInputComponent } from "../../shared/components/number-input/number-input.component";
 import { TextInputComponent } from '../../shared/components/text-input/text-input.component';
@@ -12,7 +12,8 @@ import { ToastService } from '../../shared/services/toast.service';
   selector: 'app-login',
   imports: [ReactiveFormsModule, FormsModule, CommonModule, NumberInputComponent, TextInputComponent],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: './login.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class LoginComponent implements OnInit {

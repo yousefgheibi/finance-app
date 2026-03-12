@@ -2,6 +2,7 @@
     (ngSubmit)="data() ? update() : add()">
     <div class="col-md-6 mb-4">
         <input type="text" formControlName="id" hidden>
+        <input type="text" formControlName="createdAt" hidden>
         <app-select label="نوع تراکنش" formControlName="type" [options]="transactionsType()" />
     </div>
     <div class="col-md-6">

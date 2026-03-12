@@ -60,7 +60,7 @@ export class DataFormComponent implements OnInit {
       .subscribe({
         next: () => {
           this.close();
-          this.toastService.success(`رکورد '${item.id}' با موفقیت ایجاد شد.`);
+          this.toastService.success(`رکورد جدید با موفقیت ایجاد شد.`);
         },
         error: () => {
           this.toastService.error('خطا در ایجاد رکورد جدید');

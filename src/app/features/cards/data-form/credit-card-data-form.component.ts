@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ModalService } from '../../../shared/services/modal.service';
 import { CreditCardService } from '../../../core/services/card.service';
@@ -13,7 +13,8 @@ import { NumberInputComponent } from '../../../shared/components/number-input/nu
   imports: [TextInputComponent, ReactiveFormsModule, NumberInputComponent],
   templateUrl: './credit-card-data-form.component.html',
   styles: '',
-  providers: [CreditCardService]
+  providers: [CreditCardService],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreditCardDataFormComponent implements OnInit {
 
@@ -60,7 +61,7 @@ export class CreditCardDataFormComponent implements OnInit {
       .subscribe({
         next: () => {
           this.close();
-          this.toastService.success(`رکورد '${item.id}' با موفقیت ایجاد شد.`);
+          this.toastService.success(`رکورد جدید با موفقیت ایجاد شد.`);
         },
         error: () => {
           this.toastService.error('خطا در ایجاد رکورد جدید');

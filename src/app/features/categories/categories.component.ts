@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { TableComponent } from '../../shared/components/table/table.component';
 import { TextInputComponent } from "../../shared/components/text-input/text-input.component";
 import { FormsModule } from '@angular/forms';
@@ -18,7 +18,8 @@ import { ExcelService } from '../../core/services/excel.service';
   imports: [TableComponent, TextInputComponent, FormsModule, CommonModule],
   templateUrl: './categories.component.html',
   styles: '',
-  providers: [CategoriesService]
+  providers: [CategoriesService],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CategoriesComponent implements OnInit {
 

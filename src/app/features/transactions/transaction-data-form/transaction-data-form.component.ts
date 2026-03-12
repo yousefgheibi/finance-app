@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ITransactionDto } from '../../../core/models/transaction.model';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -9,15 +9,14 @@ import { TextInputComponent } from '../../../shared/components/text-input/text-i
 import { NumberInputComponent } from '../../../shared/components/number-input/number-input.component';
 import { SelectComponent } from "../../../shared/components/select/select.component";
 import { SelectOption } from '../../../shared/models/option.model';
-import { ICategoryDto } from '../../../core/models/category.model';
-import { ICreditCardDto } from '../../../core/models/credit-card.model';
 
 @Component({
   selector: 'app-transaction-data-form',
   imports: [ReactiveFormsModule, TextInputComponent, NumberInputComponent, SelectComponent],
   templateUrl: './transaction-data-form.component.html',
   styles: '',
-  providers: [TransactionService ]
+  providers: [TransactionService],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TransactionDataFormComponent implements OnInit {
 
@@ -47,6 +46,7 @@ export class TransactionDataFormComponent implements OnInit {
       categoryName: [null, [Validators.required]],
       price: [null, [Validators.required]],
       description: [null],
+      createdAt: [null]
     });
 
     this.data.set(this.modalService.modalState()?.data?.item);
@@ -85,7 +85,7 @@ export class TransactionDataFormComponent implements OnInit {
       .subscribe({
         next: () => {
           this.close();
-          this.toastService.success(`رکورد '${item.id}' با موفقیت ایجاد شد.`);
+          this.toastService.success(`رکورد جدید با موفقیت ایجاد شد.`);
         },
         error: () => {
           this.toastService.error('خطا در ایجاد رکورد جدید');
