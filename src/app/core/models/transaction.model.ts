@@ -1,6 +1,6 @@
 export interface ITransactionDto {
     id?: number;
-    type: 'buy' | 'sell';
+    type: 'withdraw' | 'deposit';
     cardName: string;
     categoryName: string;
     createdAt: string;

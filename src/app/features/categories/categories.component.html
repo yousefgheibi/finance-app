@@ -17,9 +17,9 @@
         </div>
     </div>
 
-    <div class="card shadow-sm flex-column-fluid rounded-4 border-0">
+    <div class="card shadow-sm flex-column-fluid rounded-4 border-0 h-100">
         <div class="card-body p-0 border-0 d-flex flex-column">
-            <app-table [columns]="columns" [data]="filteredData()" [loading]="loading()">
+            <app-table [columns]="columns" [data]="filteredData()" [loading]="loading()" [pageSize]="20">
                 <ng-template #actions let-row>
                     <li class="list-group-item border-0 text-right px-2 pointer-cursor"
                         (click)="openDataFormModal(row)">

@@ -11,13 +11,19 @@ import { ExcelService } from '../../core/services/excel.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { finalize } from 'rxjs';
 import { TransactionDataFormComponent } from './transaction-data-form/transaction-data-form.component';
+import { PersianDatePipe } from '../../shared/pipes/persian-date.pipe';
+import { SelectOption } from '../../shared/models/option.model';
+import { ICategoryDto } from '../../core/models/category.model';
+import { ICreditCardDto } from '../../core/models/credit-card.model';
+import { CategoriesService } from '../../core/services/categories.service';
+import { CreditCardService } from '../../core/services/card.service';
 
 @Component({
   selector: 'app-transactions',
   imports: [TableComponent, TextInputComponent, FormsModule],
   templateUrl: './transactions.component.html',
   styles: '',
-  providers: [TransactionService]
+  providers: [TransactionService, PersianDatePipe, CategoriesService, CreditCardService]
 })
 export class TransactionsComponent implements OnInit {
 
@@ -26,18 +32,24 @@ export class TransactionsComponent implements OnInit {
   private readonly toastService = inject(ToastService);
   private readonly modalService = inject(ModalService);
   private readonly excelService = inject(ExcelService);
+  private readonly persianDatePipe = inject(PersianDatePipe);
+  private readonly categoryService = inject(CategoriesService);
+  private readonly creditCardService = inject(CreditCardService);
+
+  protected categoriesType = signal<SelectOption[] | null>(null);
+  protected creditCardsType = signal<SelectOption[] | null>(null);
 
   protected searchTerm: string = '';
   protected loading = signal(false);
   protected data: ITransactionDto[] = [];
   protected filteredData = signal<ITransactionDto[]>([]);
   protected readonly columns: TableColumn[] = [
-    { key: 'type', label: 'نوع' },
-    { key: 'categoryName', label: 'دسته‌بندی' },
+    { key: 'type', label: 'نوع', formatter: (value: string) => value == 'withdraw' ? 'برداشت' : 'واریز' },
+    { key: 'categoryName', label: 'دسته‌بندی', formatter: (value: string) => this.categoriesType()?.find(c => c.value === value)?.label ?? '' },
     { key: 'price', label: 'مبلغ', formatter: (value: string) => Number(value).toLocaleString() + ' تومان' },
-    { key: 'cardName', label: 'شماره کارت' },
-    { key: 'createdAt', label: 'تاریخ ایجاد' },
-    { key: 'description', label: 'توضیحات' }
+    { key: 'cardName', label: 'شماره کارت', formatter: (value: string) => this.creditCardsType()?.find(c => c.value === value)?.label ?? '' },
+    { key: 'createdAt', label: 'تاریخ ایجاد', class: 'dir-ltr text-right', formatter: (value: string) => this.persianDatePipe.transform(value, 'datetime') },
+    { key: 'description', label: 'توضیحات', formatter: (value: string) => value ?? '-' }
   ];
 
   ngOnInit(): void {
@@ -66,6 +78,36 @@ export class TransactionsComponent implements OnInit {
           this.toastService.error('خطا در دریافت اطلاعات');
         }
       });
+
+    this.categoryService.loadData()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (data: ICategoryDto[]) => {
+          this.categoriesType.set(
+            data.map((item): SelectOption => (
+              { label: item.name, value: String(item.id) }
+            )
+            ));
+        },
+        error: () => {
+          this.toastService.error('خطا در دریافت اطلاعات');
+        }
+      });
+
+    this.creditCardService.loadData()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (data: ICreditCardDto[]) => {
+          this.creditCardsType.set(
+            data.map((item): SelectOption => (
+              { label: `${item.bankName} - ${item.cardNumber}` , value: String(item.id) }
+            )
+            ));
+        },
+        error: () => {
+          this.toastService.error('خطا در دریافت اطلاعات');
+        }
+      });
   }
 
   protected delete(id: number) {
@@ -88,7 +130,11 @@ export class TransactionsComponent implements OnInit {
       component: TransactionDataFormComponent,
       title: item ? 'ویرایش تراکنش' : 'افزودن تراکنش جدید',
       size: 'md',
-      data: item,
+      data: {
+        item: item,
+        categoriesType : this.categoriesType(),
+        creditCardsType: this.creditCardsType()
+      },
       afterClose: () => this.loadData()
     })
   }
@@ -104,7 +150,7 @@ export class TransactionsComponent implements OnInit {
 
   protected excelExport() {
     this.toastService.info('شروع دریافت خروجی اکسل');
-    this.excelService.exportToCsv(this.filteredData(), 'categories');
+    this.excelService.exportToCsv(this.filteredData(), 'transactions');
   }
 
 }
