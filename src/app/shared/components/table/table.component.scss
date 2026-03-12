@@ -52,8 +52,7 @@ thead tr {
 }
 
 tbody {
-  // height: 410px;
-  max-height: calc(100vh - 285px);
+  height: calc(100vh - 285px);
   overflow-y: auto;
 }
 
