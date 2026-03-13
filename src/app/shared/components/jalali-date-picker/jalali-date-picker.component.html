@@ -1,0 +1,59 @@
+@if(label()){
+<label class="form-label mb-1">{{ label() }}</label>
+@if (required() || ngControl?.control?.hasError('required')) {
+<span class="text-danger">*</span>
+}
+}
+
+<div class="datepicker position-relative">
+    <div class="input-group" dir="ltr">
+        <button class="btn btn-outline-secondary" type="button" (click)="toggle()">
+            <i class="fa-regular fa-calendar"></i>
+        </button>
+        <input 
+            readonly 
+            type="text"
+            class="form-control text-right" 
+            [ngClass]="{
+                'is-valid': validationClass === 'is-valid',
+                'is-invalid': validationClass === 'is-invalid'
+            }"
+            [value]="display()"  
+            (click)="toggle()"
+            [placeholder]="placeholder()" />
+
+        </div>
+        @if (display()) {
+            <i class="fa-solid fa-xmark close" (click)="clearDate()"></i>
+        }
+
+    @if (isDatePickerOpen()) {
+    <div class="calendar shadow-sm bg-white p-2 border rounded">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <button class="btn btn-sm btn-outline-secondary d-flex p-2" (click)="prevMonth()"><i
+                    class="fa-solid fa-chevron-right"></i></button>
+            <span>{{ monthNames[currentMonth()-1] }} / {{ currentYear() }}</span>
+            <button class="btn btn-sm btn-outline-secondary d-flex p-2" (click)="nextMonth()"><i
+                    class="fa-solid fa-chevron-left"></i></button>
+        </div>
+
+        <div class="days-grid">
+            @for (day of days(); track $index) {
+            <div class="day text-center rounded" 
+                 (click)="selectDate(day)" 
+                 [class.bg-primary]="isSelected(day)"
+                 [class.text-white]="isSelected(day)" 
+                 [class.border-success]="isToday(day)">
+                 {{day}}
+            </div>
+            }
+        </div>
+    </div>
+    }
+</div>
+
+@if (validationClass === 'is-invalid') {
+<div class="invalid-feedback">
+    {{ errorMessage }}
+</div>
+}
