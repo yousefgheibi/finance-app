@@ -10,6 +10,7 @@ import { NumberInputComponent } from '../../../shared/components/number-input/nu
 
 @Component({
   selector: 'app-credit-card-data-form',
+  standalone: true,
   imports: [TextInputComponent, ReactiveFormsModule, NumberInputComponent],
   templateUrl: './credit-card-data-form.component.html',
   styles: '',

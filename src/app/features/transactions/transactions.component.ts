@@ -20,6 +20,7 @@ import { CreditCardService } from '../../core/services/card.service';
 
 @Component({
   selector: 'app-transactions',
+  standalone: true,
   imports: [TableComponent, TextInputComponent, FormsModule],
   templateUrl: './transactions.component.html',
   styles: '',

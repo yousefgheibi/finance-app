@@ -12,6 +12,7 @@ import { SelectOption } from '../../../shared/models/option.model';
 
 @Component({
   selector: 'app-transaction-data-form',
+  standalone: true,
   imports: [ReactiveFormsModule, TextInputComponent, NumberInputComponent, SelectComponent],
   templateUrl: './transaction-data-form.component.html',
   styles: '',

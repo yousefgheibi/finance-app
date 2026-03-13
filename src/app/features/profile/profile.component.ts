@@ -9,6 +9,7 @@ import { ToastService } from '../../shared/services/toast.service';
 
 @Component({
   selector: 'app-profile',
+  standalone: true,
   imports: [TextInputComponent, ReactiveFormsModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',

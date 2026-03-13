@@ -9,6 +9,7 @@ import { CategoriesService } from '../../../core/services/categories.service';
 
 @Component({
   selector: 'app-data-form',
+  standalone: true,
   imports: [ReactiveFormsModule, TextInputComponent],
   templateUrl: './data-form.component.html',
   styles: '',

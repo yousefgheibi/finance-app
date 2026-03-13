@@ -16,6 +16,7 @@ import { CreditCardPipe } from '../../shared/pipes/credit-card.pipe';
 
 @Component({
   selector: 'app-cards',
+  standalone: true,
   imports: [TableComponent, TextInputComponent, FormsModule, CommonModule],
   templateUrl: './cards.component.html',
   styles: '',

@@ -15,6 +15,7 @@ import { ExcelService } from '../../core/services/excel.service';
 
 @Component({
   selector: 'app-categories',
+  standalone: true,
   imports: [TableComponent, TextInputComponent, FormsModule, CommonModule],
   templateUrl: './categories.component.html',
   styles: '',

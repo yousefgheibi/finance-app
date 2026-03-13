@@ -5,6 +5,7 @@ import * as jalaali from 'jalaali-js';
 
 @Component({
   selector: 'app-jalali-date-picker',
+  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './jalali-date-picker.component.html',
   styleUrl: './jalali-date-picker.component.scss',

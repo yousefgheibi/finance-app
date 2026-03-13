@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, HostListener, inject, s
 
 @Component({
   selector: 'app-popover',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './popover.component.html',
   styleUrl: './popover.component.scss',
