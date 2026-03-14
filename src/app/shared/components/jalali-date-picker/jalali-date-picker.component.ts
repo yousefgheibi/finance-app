@@ -47,6 +47,10 @@ export class JalaliDatePickerComponent implements ControlValueAccessor {
     this.onTouched();
   }
 
+  onBlur(): void {
+    this.onTouched();
+  }
+  
   protected clearDate() {
     this.value = null;
     this.display.set('');
@@ -162,9 +166,9 @@ export class JalaliDatePickerComponent implements ControlValueAccessor {
     }
   }
 
-  @HostListener('document:click', ['$event.target'])
-  clickOutside(target: HTMLElement) {
-    const el = document.querySelector('app-jalali-date-picker');
-    if (el && !el.contains(target)) this.isDatePickerOpen.set(false);
-  }
+  // @HostListener('document:click', ['$event.target'])
+  // clickOutside(target: HTMLElement) {
+  //   const el = document.querySelector('app-jalali-date-picker');
+  //   if (el && !el.contains(target)) this.isDatePickerOpen.set(false);
+  // }
 }

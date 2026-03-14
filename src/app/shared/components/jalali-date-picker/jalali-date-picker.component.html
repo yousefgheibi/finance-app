@@ -20,11 +20,12 @@
             }"
             [value]="display()"  
             (click)="toggle()"
+            (blur)="onBlur()"
             [placeholder]="placeholder()" />
 
         </div>
         @if (display()) {
-            <i class="fa-solid fa-xmark close" (click)="clearDate()"></i>
+            <i class="fa-solid fa-xmark clear-icon" (click)="clearDate()"></i>
         }
 
     @if (isDatePickerOpen()) {
