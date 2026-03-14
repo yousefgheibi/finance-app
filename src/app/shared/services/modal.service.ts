@@ -12,10 +12,10 @@ export class ModalService {
         this.modalState.set(config);
     }
 
-    close() {
+    close(result?: any) {
         const current = this.modalState();
         if (current?.afterClose) {
-            current.afterClose();
+            current.afterClose(result);
         }
         this.modalState.set(null);
     }
