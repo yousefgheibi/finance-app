@@ -1,0 +1,17 @@
+.finance-card {
+    border: 1px solid #ddd;
+    transition: all .2s ease;
+}
+
+.finance-card:hover {
+    transform: translateY(-3px);
+}
+
+.card-icon {
+    font-size: 20px;
+    opacity: .8;
+}
+
+.progress {
+    background-color: #fff;
+}
