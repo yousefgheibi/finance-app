@@ -1,0 +1,32 @@
+<form class="row m-0 p-0" [formGroup]="filterForm"
+    (ngSubmit)="filter()">
+    <div class="col-md-4 mb-4">
+        <app-select label="نوع تراکنش" formControlName="type" [options]="transactionsType()" />
+    </div>
+    <div class="col-md-4">
+        <app-select label="دسته بندی" formControlName="categoryName" [options]="categoriesType()!" />
+    </div>
+    <div class="col-md-4 mb-4">
+        <app-select label="کارت" formControlName="cardName" [options]="creditCardsType()!" />
+    </div>
+    <div class="col-md-3">
+        <app-number-input label="از مبلغ" type="price" formControlName="fromPrice" />
+    </div>
+
+    <div class="col-md-3">
+        <app-number-input label="تا مبلغ" type="price" formControlName="toPrice" />
+    </div>
+
+    <div class="col-md-3">
+        <app-jalali-date-picker label="از تاریخ" formControlName="fromDate" />
+    </div>
+
+    <div class="col-md-3">
+        <app-jalali-date-picker label="تا تاریخ" formControlName="toDate" />
+    </div>
+
+    <div class="col-md-12 text-left mt-4">
+        <button class="btn btn-outline-primary mx-1" type="button" (click)="close()">بستن</button>
+        <button class="btn btn-primary" type="submit" [disabled]="filterForm.invalid">تایید</button>
+    </div>
+</form>

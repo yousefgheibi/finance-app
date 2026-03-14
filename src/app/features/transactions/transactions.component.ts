@@ -17,6 +17,7 @@ import { ICategoryDto } from '../../core/models/category.model';
 import { ICreditCardDto } from '../../core/models/credit-card.model';
 import { CategoriesService } from '../../core/services/categories.service';
 import { CreditCardService } from '../../core/services/card.service';
+import { TransactionsFilterComponent } from './transactions-filter/transactions-filter.component';
 
 @Component({
   selector: 'app-transactions',
@@ -38,6 +39,7 @@ export class TransactionsComponent implements OnInit {
   private readonly categoryService = inject(CategoriesService);
   private readonly creditCardService = inject(CreditCardService);
 
+  private filterFormData = signal<any>(null);
   protected categoriesType = signal<SelectOption[] | null>(null);
   protected creditCardsType = signal<SelectOption[] | null>(null);
 
@@ -68,13 +70,13 @@ export class TransactionsComponent implements OnInit {
       });
   }
 
-  protected loadData() {
+  protected loadData(filter?: any) {
     this.entityService.loadData()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (data: ITransactionDto[]) => {
           this.data = data;
-          this.filteredData.set(data);
+          this.filteredData.set(filter ? data.filter(item => this.matchesFilter(item, filter)) : data);
         },
         error: () => {
           this.toastService.error('خطا در دریافت اطلاعات');
@@ -102,7 +104,7 @@ export class TransactionsComponent implements OnInit {
         next: (data: ICreditCardDto[]) => {
           this.creditCardsType.set(
             data.map((item): SelectOption => (
-              { label: `${item.bankName} - ${item.cardNumber}` , value: String(item.id) }
+              { label: `${item.bankName} - ${item.cardNumber}`, value: String(item.id) }
             )
             ));
         },
@@ -134,10 +136,29 @@ export class TransactionsComponent implements OnInit {
       size: 'md',
       data: {
         item: item,
-        categoriesType : this.categoriesType(),
+        categoriesType: this.categoriesType(),
         creditCardsType: this.creditCardsType()
       },
       afterClose: () => this.loadData()
+    })
+  }
+
+  protected openFilterModal() {
+    this.modalService.open({
+      component: TransactionsFilterComponent,
+      title: 'جستجوی پیشرفته',
+      size: 'xl',
+      data: {
+        item: this.filterFormData(),
+        categoriesType: this.categoriesType(),
+        creditCardsType: this.creditCardsType()
+      },
+      afterClose: (result) => {
+        const filter = result && Object.keys(result).length ? result : null;
+        
+        this.filterFormData.set(filter);
+        this.loadData(filter ?? undefined);
+      }
     })
   }
 
@@ -155,4 +176,18 @@ export class TransactionsComponent implements OnInit {
     this.excelService.exportToCsv(this.filteredData(), 'transactions');
   }
 
+  private matchesFilter(item: ITransactionDto, filter: any): boolean {
+
+    if (filter.type && item.type !== filter.type) return false;
+    if (filter.categoryName && item.categoryName !== filter.categoryName) return false;
+    if (filter.cardName && item.cardName !== filter.cardName) return false;
+
+    if (filter.fromDate && new Date(item.createdAt) < new Date(filter.fromDate)) return false;
+    if (filter.toDate && new Date(item.createdAt) > new Date(filter.toDate)) return false;
+
+    if (filter.fromPrice && item.price < filter.fromPrice) return false;
+    if (filter.toPrice && item.price > filter.toPrice) return false;
+
+    return true;
+  }
 }
