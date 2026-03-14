@@ -7,3 +7,22 @@
 .form-select {
     background-position: left .75rem center !important;
 }
+
+.select-wrapper {
+    position: relative;
+}
+
+.clear-icon, .dropdown-icon {
+    position: absolute;
+    top: 50%;
+    left: 8px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 14px;
+    color: #6c757d;
+    transition: color 0.2s;
+}
+
+.form-select {
+    padding-right: 2.5rem;
+}

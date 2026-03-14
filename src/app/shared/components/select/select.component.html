@@ -5,24 +5,30 @@
     }
 }
 
-<select class="form-select" 
+<div class="select-wrapper">
+    <select class="form-select" 
         [ngClass]="{
             'is-valid': validationClass === 'is-valid',
             'is-invalid': validationClass === 'is-invalid'
         }"        
-        [value]="value()" 
         [disabled]="disabled()" 
         [required]="required()" 
         (change)="onChangeSelect($event)" 
         (blur)="onBlur()">
             <option value="" disabled selected hidden> {{ placeholder() }} </option>
             @for (opt of options(); track opt.value) {
-                <option [value]="opt.value">
+                <option [value]="opt.value" [selected]="opt.value === value()">
                     {{ opt.label }}
                 </option>
             }
-</select>
-
+        </select>
+        @if (value()) {
+            <i class="fa-solid fa-xmark clear-icon" (click)="clearDate()"></i>
+        }
+        @else {
+            <i class="fa-solid fa-chevron-down dropdown-icon"></i>
+        }
+</div>
 @if (ngControl?.control?.invalid && (ngControl?.control?.dirty || ngControl?.control?.touched)) {
 <div class="invalid-feedback">
     {{ errorMessage }}

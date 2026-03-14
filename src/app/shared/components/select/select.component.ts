@@ -54,6 +54,12 @@ export class SelectComponent implements ControlValueAccessor {
     this.onTouched();
   }
 
+   protected clearDate() {
+    this.value.set('');
+    this.onChange(this.value());
+    this.onTouched();
+  }
+
   get validationClass(): string {
     if (!this.ngControl) return '';
     const control = this.ngControl.control;
