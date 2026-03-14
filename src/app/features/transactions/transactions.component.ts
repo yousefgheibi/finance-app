@@ -18,6 +18,7 @@ import { ICreditCardDto } from '../../core/models/credit-card.model';
 import { CategoriesService } from '../../core/services/categories.service';
 import { CreditCardService } from '../../core/services/card.service';
 import { TransactionsFilterComponent } from './transactions-filter/transactions-filter.component';
+import { TransactionType } from '../../shared/enums/transaction.enum';
 
 @Component({
   selector: 'app-transactions',
@@ -48,7 +49,7 @@ export class TransactionsComponent implements OnInit {
   protected data: ITransactionDto[] = [];
   protected filteredData = signal<ITransactionDto[]>([]);
   protected readonly columns: TableColumn[] = [
-    { key: 'type', label: 'نوع', formatter: (value: string) => value == 'withdraw' ? 'برداشت' : 'واریز' },
+    { key: 'type', label: 'نوع', formatter: (value: string) => value == TransactionType.Withdrawal ? 'برداشت' : 'واریز' },
     { key: 'categoryName', label: 'دسته‌بندی', formatter: (value: string) => this.categoriesType()?.find(c => c.value === value)?.label ?? '' },
     { key: 'price', label: 'مبلغ', formatter: (value: string) => Number(value).toLocaleString() + ' تومان' },
     { key: 'cardName', label: 'شماره کارت', formatter: (value: string) => this.creditCardsType()?.find(c => c.value === value)?.label ?? '' },

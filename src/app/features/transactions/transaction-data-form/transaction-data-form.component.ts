@@ -9,6 +9,7 @@ import { TextInputComponent } from '../../../shared/components/text-input/text-i
 import { NumberInputComponent } from '../../../shared/components/number-input/number-input.component';
 import { SelectComponent } from "../../../shared/components/select/select.component";
 import { SelectOption } from '../../../shared/models/option.model';
+import { TransactionType } from '../../../shared/enums/transaction.enum';
 
 @Component({
   selector: 'app-transaction-data-form',
@@ -25,8 +26,8 @@ export class TransactionDataFormComponent implements OnInit {
   protected dataForm!: FormGroup;
 
   protected transactionsType = signal<SelectOption[]>([
-    { label: 'برداشت', value: 'withdraw' },
-    { label: 'واریز', value: 'deposit' }
+    { label: 'برداشت', value: TransactionType.Withdrawal },
+    { label: 'واریز', value: TransactionType.Deposit }
   ]);
 
   protected categoriesType = signal<SelectOption[] | null>(null);
