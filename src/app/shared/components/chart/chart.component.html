@@ -1,0 +1,16 @@
+<div class="p-3">
+
+  @if(config().title){
+    <h5 class="mb-3 fs--16px">
+      {{ config().title }}
+    </h5>
+  }
+
+  <canvas
+    baseChart
+    [type]="config().type"
+    [data]="chartData()"
+    [options]="chartOptions()">
+  </canvas>
+
+</div>

@@ -7,11 +7,13 @@ import { TransactionSummary } from '../../core/models/transaction-summary.model'
 import { ITransactionDto } from '../../core/models/transaction.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ToastService } from '../../shared/services/toast.service';
+import { ChartComponent } from "../../shared/components/chart/chart.component";
+import { ChartConfig } from '../../shared/models/chart.config';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [FinanceCardComponent],
+  imports: [FinanceCardComponent, ChartComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,10 +29,10 @@ export class DashboardComponent implements OnInit {
 
   protected financeCards = computed(() => {
     const periods = [
-      { title: 'امروز', period: Period.Today, cardClass: 'bg-light-blue' },
-      { title: '1 روز گذشته', period: Period.Yesterday, cardClass: 'bg-light-green' },
-      { title: '7 روز گذشته', period: Period.Week, cardClass: 'bg-light-yellow' },
-      { title: '30 روز گذشته', period: Period.Month, cardClass: 'bg-light-purple' }
+      { title: 'امروز', period: Period.Today, cardClass: 'bg-light-blue card' },
+      { title: '1 روز گذشته', period: Period.Yesterday, cardClass: 'bg-light-green card' },
+      { title: '7 روز گذشته', period: Period.Week, cardClass: 'bg-light-yellow card' },
+      { title: '30 روز گذشته', period: Period.Month, cardClass: 'bg-light-purple card' }
     ];
 
     const withdrawalTotals = [
@@ -65,6 +67,47 @@ export class DashboardComponent implements OnInit {
     });
   });
 
+  protected monthlyChart: ChartConfig = {
+    title: 'گزارش عملکرد ماهانه',
+    type: 'line',
+    data: {
+      labels: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'],
+      datasets: [
+        {
+          label: 'برداشت',
+          data: [100, 200, 150, 300, 250, 400, 350, 500, 450, 600, 550, 700],
+          color: '#FF6384'
+        },
+        {
+          label: 'واریز',
+          data: [180, 180, 120, 280, 20, 380, 320, 880, 620, 480, 220, 680],
+          color: '#7BBA9F'
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      unit: 'تومان'
+    }
+  };
+
+  protected categoryChart: ChartConfig = {
+    title: 'گزارش تفکیک شده بر اساس دسته‌بندی',
+    type: 'pie',
+    data: {
+      labels: ['نانوایی', 'آشپزی', 'لوازم', 'تفریح', 'سایر', 'حقوق', 'سرمایه‌گذاری', 'سایر'],
+      datasets: [
+        {
+          label: 'برداشت',
+          data: [100, 200, 150, 300, 250, 400, 350, 500]
+        },
+        {
+          label: 'واریز',
+          data: [180, 180, 120, 280, 20, 380, 320, 880]
+        }
+      ]
+    }
+  };
 
   ngOnInit(): void {
     this.transactionService.initDatabase()

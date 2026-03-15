@@ -68,7 +68,7 @@ body {
   text-align: right;
 }
 
-.dir-ltr{
+.dir-ltr {
   direction: ltr;
 }
 
@@ -200,4 +200,13 @@ body {
 
 .bg-light-purple {
   background: #F3E8FF;
+}
+
+.card {
+  border: 1px solid #ddd;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
 }
