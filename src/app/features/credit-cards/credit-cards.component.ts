@@ -15,10 +15,10 @@ import { CreditCardDataFormComponent } from './data-form/credit-card-data-form.c
 import { CreditCardPipe } from '../../shared/pipes/credit-card.pipe';
 
 @Component({
-  selector: 'app-cards',
+  selector: 'app-credit-cards',
   standalone: true,
   imports: [TableComponent, TextInputComponent, FormsModule, CommonModule],
-  templateUrl: './cards.component.html',
+  templateUrl: './credit-cards.component.html',
   styles: '',
   providers: [CreditCardService, CreditCardPipe],
   changeDetection: ChangeDetectionStrategy.OnPush

@@ -18,7 +18,7 @@ export class SidebarComponent {
   private readonly authService = inject(AuthService);
   protected readonly navItems: NavItem[] = [
     { path: '/dashboard', icon: 'fa-tv', label: 'داشبورد' },
-    { path: '/transactions', icon: 'fa-file-invoice', label: 'تراکنش‌ها' },
+    { path: '/my-transactions', icon: 'fa-file-invoice', label: 'تراکنش‌ها' },
     { path: '/categories', icon: 'fa-list-alt', label: 'دسته بندی‌ها' },
     { path: '/my-credit-cards', icon: 'fa-credit-card', label: 'کارت‌های من' },
     { path: '/profile', icon: 'fa-user-circle', label: 'تنظیمات' },

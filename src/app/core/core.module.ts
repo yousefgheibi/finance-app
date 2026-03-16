@@ -36,13 +36,13 @@ const routes: Routes = [
       },
       {
         path: 'my-credit-cards',
-        loadComponent: () => import('../features/cards/cards.component')
+        loadComponent: () => import('../features/credit-cards/credit-cards.component')
           .then(m => m.CardsComponent),
         title: 'کارت‌های من',
         data: { title: 'کارت‌های من' }
       },
       {
-        path: 'transactions',
+        path: 'my-transactions',
         loadComponent: () => import('../features/transactions/transactions.component')
           .then(m => m.TransactionsComponent),
         title: 'تراکنش‌ها',
