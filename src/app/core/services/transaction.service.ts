@@ -4,6 +4,9 @@ import { from, map } from "rxjs";
 import { ITransactionDto } from "../models/transaction.model";
 import { TransactionType } from "../../shared/enums/transaction.enum";
 import { Period } from "../../shared/enums/period.enum";
+import { TransactionSummary } from "../models/transaction-summary.model";
+import { toJalaali } from "jalaali-js";
+import { TransactionAnnualSummary } from "../models/transaction-annual-summary.model";
 
 @Injectable()
 export class TransactionService {
@@ -39,50 +42,70 @@ export class TransactionService {
         );
     }
 
-    getTransactionSummary(type: TransactionType, period: Period) {
-        return this.loadData().pipe(
-            map((items: ITransactionDto[]) => {
+    getTransactionSummary(items: ITransactionDto[], type: TransactionType, period: Period): TransactionSummary {
+        const now = new Date();
 
-                const now = new Date();
+        const filtered = items.filter(item => {
+            if (item.type !== type) return false;
+            const date = new Date(item.createdAt);
 
-                const filtered = items.filter(item => {
+            switch (period) {
+                case Period.Today:
+                    return date.toDateString() === now.toDateString();
 
-                    if (item.type !== type) return false;
+                case Period.Yesterday:
+                    const yesterday = new Date();
+                    yesterday.setDate(now.getDate() - 1);
+                    return date.toDateString() === yesterday.toDateString();
 
-                    const date = new Date(item.createdAt);
+                case Period.Week:
+                    const lastWeek = new Date();
+                    lastWeek.setDate(now.getDate() - 7);
+                    return date >= lastWeek && date <= now;
 
-                    switch (period) {
+                case Period.Month:
+                    const lastMonth = new Date();
+                    lastMonth.setMonth(now.getMonth() - 1);
+                    return date >= lastMonth && date <= now;
 
-                        case Period.Today:
-                            return date.toDateString() === now.toDateString();
+                default:
+                    return false;
+            }
+        });
 
-                        case Period.Yesterday:
-                            const yesterday = new Date();
-                            yesterday.setDate(now.getDate() - 1);
-                            return date.toDateString() === yesterday.toDateString();
+        return {
+            total: filtered.reduce((sum, t) => sum + Number(t.price), 0),
+            count: filtered.length
+        };
+    }
 
-                        case Period.Week:
-                            const lastWeek = new Date();
-                            lastWeek.setDate(now.getDate() - 7);
-                            return date >= lastWeek && date <= now;
+    getTransactionAnnualSummary(transactions: ITransactionDto[], fiscalYear: number): TransactionAnnualSummary[] {
+        const months: TransactionAnnualSummary[] = [];
 
-                        case Period.Month:
-                            const lastMonth = new Date();
-                            lastMonth.setMonth(now.getMonth() - 1);
-                            return date >= lastMonth && date <= now;
+        const groupedByMonth = transactions
+            .filter(transaction => toJalaali(new Date(transaction.createdAt)).jy === fiscalYear)
+            .reduce((acc, transaction) => {
+                const jalaaliDate = toJalaali(new Date(transaction.createdAt));
+                const month = jalaaliDate.jm;
 
-                        default:
-                            return false;
-                    }
+                if (!acc[month]) {
+                    acc[month] = {
+                        withdrawals: 0,
+                        deposits: 0,
+                    };
+                }
+                acc[month][transaction.type === TransactionType.Withdrawal ? 'withdrawals' : 'deposits'] += Number(transaction.price);
+                return acc;
+            }, {} as any);
 
-                });
+        for (let month = 1; month <= 12; month++) {
+            months.push({
+                month: month,
+                withdrawals: groupedByMonth[month]?.withdrawals || 0,
+                deposits: groupedByMonth[month]?.deposits || 0,
+            });
+        }
 
-                return {
-                    total: filtered.reduce((sum, t) => sum + t.price, 0),
-                    count: filtered.length
-                };
-
-            })
-        );
+        return months;
     }
 }

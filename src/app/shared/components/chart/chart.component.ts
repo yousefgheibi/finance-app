@@ -54,7 +54,7 @@ export class ChartComponent {
         ticks: {
           font: this.font,
           callback: this.config().options?.unit
-            ? (value: string | number) => `${value} ${this.config().options!.unit}`
+            ? (value: string | number) => `${value.toLocaleString()} ${this.config().options!.unit}`
             : undefined
 
         }

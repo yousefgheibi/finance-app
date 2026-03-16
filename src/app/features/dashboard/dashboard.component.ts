@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, DestroyRef, effect, inject, OnInit, signal } from '@angular/core';
 import { FinanceCardComponent } from '../../shared/components/finance-card/finance-card.component';
 import { Period } from '../../shared/enums/period.enum';
 import { TransactionType } from '../../shared/enums/transaction.enum';
@@ -9,6 +9,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ToastService } from '../../shared/services/toast.service';
 import { ChartComponent } from "../../shared/components/chart/chart.component";
 import { ChartConfig } from '../../shared/models/chart.config';
+import { FiscalYearService } from '../../core/services/fiscal-year.service';
+import { TransactionAnnualSummary } from '../../core/models/transaction-annual-summary.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,6 +26,7 @@ export class DashboardComponent implements OnInit {
   private readonly transactionService = inject(TransactionService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly toastService = inject(ToastService);
+  private readonly fiscalYearService = inject(FiscalYearService);
 
   private transactions = signal<ITransactionDto[]>([]);
 
@@ -36,25 +39,25 @@ export class DashboardComponent implements OnInit {
     ];
 
     const withdrawalTotals = [
-      this.getSummary(TransactionType.Withdrawal, Period.Today).total,
-      this.getSummary(TransactionType.Withdrawal, Period.Yesterday).total,
-      this.getSummary(TransactionType.Withdrawal, Period.Week).total,
-      this.getSummary(TransactionType.Withdrawal, Period.Month).total
+      this.transactionService.getTransactionSummary(this.transactions(), TransactionType.Withdrawal, Period.Today).total,
+      this.transactionService.getTransactionSummary(this.transactions(), TransactionType.Withdrawal, Period.Yesterday).total,
+      this.transactionService.getTransactionSummary(this.transactions(), TransactionType.Withdrawal, Period.Week).total,
+      this.transactionService.getTransactionSummary(this.transactions(), TransactionType.Withdrawal, Period.Month).total
     ];
 
     const depositTotals = [
-      this.getSummary(TransactionType.Deposit, Period.Today).total,
-      this.getSummary(TransactionType.Deposit, Period.Yesterday).total,
-      this.getSummary(TransactionType.Deposit, Period.Week).total,
-      this.getSummary(TransactionType.Deposit, Period.Month).total
+      this.transactionService.getTransactionSummary(this.transactions(), TransactionType.Deposit, Period.Today).total,
+      this.transactionService.getTransactionSummary(this.transactions(), TransactionType.Deposit, Period.Yesterday).total,
+      this.transactionService.getTransactionSummary(this.transactions(), TransactionType.Deposit, Period.Week).total,
+      this.transactionService.getTransactionSummary(this.transactions(), TransactionType.Deposit, Period.Month).total
     ];
 
     const maxDepositTotal = Math.max(...depositTotals);
     const maxWithdrawalTotal = Math.max(...withdrawalTotals);
 
     return periods.map(p => {
-      const deposit = this.getSummary(TransactionType.Deposit, p.period);
-      const withdrawal = this.getSummary(TransactionType.Withdrawal, p.period);
+      const deposit = this.transactionService.getTransactionSummary(this.transactions(), TransactionType.Deposit, p.period);
+      const withdrawal = this.transactionService.getTransactionSummary(this.transactions(), TransactionType.Withdrawal, p.period);
 
       return {
         title: p.title,
@@ -67,29 +70,33 @@ export class DashboardComponent implements OnInit {
     });
   });
 
-  protected monthlyChart: ChartConfig = {
-    title: 'گزارش عملکرد ماهانه',
-    type: 'line',
-    data: {
-      labels: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'],
-      datasets: [
-        {
-          label: 'برداشت',
-          data: [100, 200, 150, 300, 250, 400, 350, 500, 450, 600, 550, 700],
-          color: '#FF6384'
-        },
-        {
-          label: 'واریز',
-          data: [180, 180, 120, 280, 20, 380, 320, 880, 620, 480, 220, 680],
-          color: '#7BBA9F'
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      unit: 'تومان'
-    }
-  };
+  protected monthlyChart = computed(() => {
+    const config: ChartConfig = {
+      title: 'گزارش عملکرد ماهانه',
+      type: 'line',
+      data: {
+        labels: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'],
+        datasets: [
+          {
+            label: 'برداشت',
+            data: this.transactionService.getTransactionAnnualSummary(this.transactions(), Number(this.fiscalYearService.currentFiscalYear())).map(item => item.withdrawals),
+            color: '#FF6384'
+          },
+          {
+            label: 'واریز',
+            data: this.transactionService.getTransactionAnnualSummary(this.transactions(), Number(this.fiscalYearService.currentFiscalYear())).map(item => item.deposits),
+            color: '#7BBA9F'
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        unit: 'تومان'
+      }
+    };
+
+    return config;
+  });
 
   protected categoryChart: ChartConfig = {
     title: 'گزارش تفکیک شده بر اساس دسته‌بندی',
@@ -129,43 +136,5 @@ export class DashboardComponent implements OnInit {
           this.toastService.error('خطا در دریافت اطلاعات');
         }
       });
-  }
-
-  private getSummary(type: TransactionType, period: Period): TransactionSummary {
-    const items = this.transactions();
-    const now = new Date();
-
-    const filtered = items.filter(item => {
-      if (item.type !== type) return false;
-      const date = new Date(item.createdAt);
-
-      switch (period) {
-        case Period.Today:
-          return date.toDateString() === now.toDateString();
-
-        case Period.Yesterday:
-          const yesterday = new Date();
-          yesterday.setDate(now.getDate() - 1);
-          return date.toDateString() === yesterday.toDateString();
-
-        case Period.Week:
-          const lastWeek = new Date();
-          lastWeek.setDate(now.getDate() - 7);
-          return date >= lastWeek && date <= now;
-
-        case Period.Month:
-          const lastMonth = new Date();
-          lastMonth.setMonth(now.getMonth() - 1);
-          return date >= lastMonth && date <= now;
-
-        default:
-          return false;
-      }
-    });
-
-    return {
-      total: filtered.reduce((sum, t) => sum + Number(t.price), 0),
-      count: filtered.length
-    };
   }
 }
