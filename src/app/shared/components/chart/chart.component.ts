@@ -15,7 +15,7 @@ export class ChartComponent {
 
   private font: Partial<FontSpec> = {
     family: 'Vazirmatn',
-    size: 14
+    size: 12
   };
 
   config = input.required<ChartConfig>();
@@ -44,7 +44,7 @@ export class ChartComponent {
         bodyFont: this.font
       }
     },
-    scales: this.config().type === 'pie' ? {} : {
+    scales: ['pie','doughnut'].includes(this.config().type) ? {} : {
       x: {
         ticks: {
           font: this.font

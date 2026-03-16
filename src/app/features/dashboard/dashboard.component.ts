@@ -93,17 +93,13 @@ export class DashboardComponent implements OnInit {
 
   protected categoryChart: ChartConfig = {
     title: 'گزارش تفکیک شده بر اساس دسته‌بندی',
-    type: 'pie',
+    type: 'doughnut',
     data: {
       labels: ['نانوایی', 'آشپزی', 'لوازم', 'تفریح', 'سایر', 'حقوق', 'سرمایه‌گذاری', 'سایر'],
       datasets: [
         {
           label: 'برداشت',
           data: [100, 200, 150, 300, 250, 400, 350, 500]
-        },
-        {
-          label: 'واریز',
-          data: [180, 180, 120, 280, 20, 380, 320, 880]
         }
       ]
     }

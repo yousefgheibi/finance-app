@@ -203,10 +203,11 @@ body {
 }
 
 .card {
-  border: 1px solid #ddd;
+  border: 0;
+  box-shadow: var(--bs-box-shadow-sm) !important;
   transition: all 0.3s ease;
 }
 
 .card:hover {
-  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
+  box-shadow: 0 0.1rem 0.5rem rgba(0, 0, 0, 0.15) !important;
 }
