@@ -79,7 +79,7 @@ export class TransactionService {
         };
     }
 
-    getTransactionAnnualSummary(transactions: ITransactionDto[], fiscalYear: number): TransactionAnnualSummary[] {
+    getTransactionsAnnualSummary(transactions: ITransactionDto[], fiscalYear: number): TransactionAnnualSummary[] {
         const months: TransactionAnnualSummary[] = [];
 
         const groupedByMonth = transactions
@@ -107,5 +107,18 @@ export class TransactionService {
         }
 
         return months;
+    }
+
+    getWithdrawalTransactionsFilterByCategory(transactions: ITransactionDto[], fiscalYear: number) {
+        return transactions
+            .filter(transaction => toJalaali(new Date(transaction.createdAt)).jy === fiscalYear)
+            .filter(transaction => transaction.type === TransactionType.Withdrawal)
+            .reduce((acc, transaction) => {
+                if (!acc[transaction.categoryName]) {
+                    acc[transaction.categoryName] = 0;
+                }
+                acc[transaction.categoryName] += Number(transaction.price)
+                return acc;
+            }, {} as any)
     }
 }

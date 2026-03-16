@@ -10,7 +10,9 @@ import { ToastService } from '../../shared/services/toast.service';
 import { ChartComponent } from "../../shared/components/chart/chart.component";
 import { ChartConfig } from '../../shared/models/chart.config';
 import { FiscalYearService } from '../../core/services/fiscal-year.service';
-import { TransactionAnnualSummary } from '../../core/models/transaction-annual-summary.model';
+import { SelectOption } from '../../shared/models/option.model';
+import { ICategoryDto } from '../../core/models/category.model';
+import { CategoriesService } from '../../core/services/categories.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,7 +21,7 @@ import { TransactionAnnualSummary } from '../../core/models/transaction-annual-s
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [TransactionService]
+  providers: [TransactionService, CategoriesService]
 })
 export class DashboardComponent implements OnInit {
 
@@ -27,7 +29,9 @@ export class DashboardComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   private readonly toastService = inject(ToastService);
   private readonly fiscalYearService = inject(FiscalYearService);
+  private readonly categoryService = inject(CategoriesService);
 
+  protected categoriesType = signal<SelectOption[] | null>(null);
   private transactions = signal<ITransactionDto[]>([]);
 
   protected financeCards = computed(() => {
@@ -70,7 +74,8 @@ export class DashboardComponent implements OnInit {
     });
   });
 
-  protected monthlyChart = computed(() => {
+  protected transactionsAnnualSummaryChart = computed(() => {
+    const filterdTransactions = this.transactionService.getTransactionsAnnualSummary(this.transactions(), Number(this.fiscalYearService.currentFiscalYear()));
     const config: ChartConfig = {
       title: 'گزارش عملکرد ماهانه',
       type: 'line',
@@ -79,12 +84,12 @@ export class DashboardComponent implements OnInit {
         datasets: [
           {
             label: 'برداشت',
-            data: this.transactionService.getTransactionAnnualSummary(this.transactions(), Number(this.fiscalYearService.currentFiscalYear())).map(item => item.withdrawals),
+            data: filterdTransactions.map(item => item.withdrawals),
             color: '#FF6384'
           },
           {
             label: 'واریز',
-            data: this.transactionService.getTransactionAnnualSummary(this.transactions(), Number(this.fiscalYearService.currentFiscalYear())).map(item => item.deposits),
+            data: filterdTransactions.map(item => item.deposits),
             color: '#7BBA9F'
           }
         ]
@@ -98,19 +103,24 @@ export class DashboardComponent implements OnInit {
     return config;
   });
 
-  protected categoryChart: ChartConfig = {
-    title: 'گزارش تفکیک شده بر اساس دسته‌بندی',
-    type: 'doughnut',
-    data: {
-      labels: ['نانوایی', 'آشپزی', 'لوازم', 'تفریح', 'سایر', 'حقوق', 'سرمایه‌گذاری', 'سایر'],
-      datasets: [
-        {
-          label: 'برداشت',
-          data: [100, 200, 150, 300, 250, 400, 350, 500]
-        }
-      ]
-    }
-  };
+  protected withdrawalTransactionsFilterByCategoryChart = computed(() => {
+    const filterdTransactions = this.transactionService.getWithdrawalTransactionsFilterByCategory(this.transactions(), Number(this.fiscalYearService.currentFiscalYear()));
+    const config: ChartConfig = {
+      title: 'گزارش برداشت بر اساس دسته‌بندی',
+      type: 'doughnut',
+      data: {
+        labels: Object.keys(filterdTransactions).map(key => this.categoriesType()?.find(c => c.value === key)?.label ?? ''),
+        datasets: [
+          {
+            label: 'برداشت',
+            data: Object.values(filterdTransactions)
+          }
+        ]
+      }
+    };
+
+    return config;
+  });
 
   ngOnInit(): void {
     this.transactionService.initDatabase()
@@ -126,6 +136,21 @@ export class DashboardComponent implements OnInit {
   }
 
   private loadData() {
+    this.categoryService.loadData()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (data: ICategoryDto[]) => {
+          this.categoriesType.set(
+            data.map((item): SelectOption => (
+              { label: item.name, value: String(item.id) }
+            )
+            ));
+        },
+        error: () => {
+          this.toastService.error('خطا در دریافت اطلاعات');
+        }
+      });
+
     this.transactionService.loadData()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
