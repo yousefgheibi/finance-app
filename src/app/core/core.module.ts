@@ -5,6 +5,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { PopoverComponent } from '../shared/components/popover/popover.component';
+import { SelectComponent } from "../shared/components/select/select.component";
+import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -55,8 +57,10 @@ const routes: Routes = [
   imports: [
     CommonModule,
     PopoverComponent,
-    RouterModule.forChild(routes)
-  ],
+    RouterModule.forChild(routes),
+    SelectComponent,
+    FormsModule
+],
   exports: [LayoutComponent,
     RouterModule]
 })

@@ -3,6 +3,9 @@ import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, map } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { SelectOption } from '../../../shared/models/option.model';
+import { FiscalYearService } from '../../services/fiscal-year.service';
+import { GlobalConfig } from '../../config/global-config';
 
 @Component({
   selector: 'app-header',
@@ -15,8 +18,11 @@ export class HeaderComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly fiscalYearService = inject(FiscalYearService);
 
   protected pageTitle = signal('');
+  protected fiscalYears = signal<SelectOption[]>(GlobalConfig.fiscalYearsOptions);
+  protected currentFiscalYear = '';
 
   ngOnInit() {
     this.router.events
@@ -34,10 +40,16 @@ export class HeaderComponent implements OnInit {
       .subscribe(title => {
         this.pageTitle.set(title);
       });
+
+      this.currentFiscalYear = this.fiscalYearService.currentFiscalYear()!;
   }
   
   protected goToProfile(): void {
     this.router.navigate(['/profile']);
+  }
+
+  protected updateFiscalYear() {
+    this.fiscalYearService.updateFiscalYear(this.currentFiscalYear);
   }
 
   logout(): void {
