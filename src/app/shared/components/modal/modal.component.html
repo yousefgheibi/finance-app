@@ -3,8 +3,8 @@
 <div class="modal-backdrop">
     <div class="modal-container" [ngClass]="config()?.size || 'md'">
         <div class="modal-header">
-            <h5>{{ config()?.title }}</h5>
-            <button class="close-btn" (click)="close()">✕</button>
+            <h5 class="fs-6">{{ config()?.title }}</h5>
+            <button class="close-btn text-muted" (click)="close()"><i class="fa fa-close"></i></button>
         </div>
 
         <div class="modal-body">
@@ -20,7 +20,7 @@
     <div class="offcanvas-container" [ngClass]="config()?.size || 'md'">
         <div class="offcanvas-header">
             <h5>{{ config()?.title }}</h5>
-            <button class="close-btn" (click)="close()">✕</button>
+            <button class="close-btn text-muted" (click)="close()"><i class="fa fa-close"></i></button>
         </div>
 
         <div class="offcanvas-body">

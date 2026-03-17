@@ -1,6 +1,7 @@
 @import url('../public/styles/typography.scss');
 @import url('../public/styles/layout-dimensions.scss');
 @import url('../public/styles/bootstrap-override.scss');
+@import url('../public/fontawesome/css/all.min.css');
 
 
 :root {
@@ -45,6 +46,7 @@ body {
   overflow-x: hidden;
   margin: 0;
   font-family: "Vazirmatn";
+  font-variant-numeric: tabular-nums !important;
 }
 
 .pointer-cursor {

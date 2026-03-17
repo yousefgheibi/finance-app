@@ -1,13 +1,13 @@
 <div class="container-fluid">
     <div class="row shadow-sm rounded-4 px-0 px-md-6 py-4 py-md-6 bg-white justify-content-between">
         <div class="col-9 col-md-11">
-            <span class="text-primary fw-semibold fs--20px">اطلاعات شخصی</span>
+            <span class="text-primary fw-semibold fs-20">اطلاعات شخصی</span>
         </div>
         <div class="col-3 col-md-1 d-flex align-items-center pointer-cursor">
             @if (profileForm.disabled) {
             <button class="btn d-flex align-items-center" (click)="profileForm.enable()">
                 <i class="fa-solid opacity-75 fa-pencil text-primary mx-1"></i>
-                <span class="fs--14px text-primary">ویرایش</span>
+                <span class="fs-14 text-primary">ویرایش</span>
             </button>
             }
         </div>
@@ -41,7 +41,7 @@
             <div class="row shadow-sm rounded-4 px-3 px-md-6 py-4 py-md-6 bg-white">
 
                 <div class="col-12 mb-3">
-                    <span class="text-primary fw-semibold fs--20px">اطلاعات ظاهری</span>
+                    <span class="text-primary fw-semibold fs-20">اطلاعات ظاهری</span>
                 </div>
 
                 <div class="col-12 mb-4">
@@ -52,25 +52,25 @@
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="fontSize" value="small"
                                 (change)="setFontSize('small')" [checked]="fontSize() === 'small'">
-                            <label class="form-check-label">12px</label>
+                            <label class="form-check-label">کوچک</label>
                         </div>
 
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="fontSize" value="medium"
                                 (change)="setFontSize('medium')" [checked]="fontSize() === 'medium'">
-                            <label class="form-check-label">14px</label>
+                            <label class="form-check-label">متوسط</label>
                         </div>
 
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="fontSize" value="large"
                                 (change)="setFontSize('large')" [checked]="fontSize() === 'large'">
-                            <label class="form-check-label">20px</label>
+                            <label class="form-check-label">بزرگ</label>
                         </div>
 
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="fontSize" value="xlarge"
                                 (change)="setFontSize('xlarge')" [checked]="fontSize() === 'xlarge'">
-                            <label class="form-check-label">22px</label>
+                            <label class="form-check-label">خیلی بزرگ</label>
                         </div>
 
                     </div>
