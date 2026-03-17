@@ -3,21 +3,21 @@
     <div class="col-md-4 mb-4">
         <app-select label="نوع تراکنش" formControlName="type" [options]="transactionsType()" />
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4 mb-4">
         <app-select label="دسته بندی" formControlName="categoryName" [options]="categoriesType()!" />
     </div>
     <div class="col-md-4 mb-4">
         <app-select label="کارت" formControlName="cardName" [options]="creditCardsType()!" />
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 mb-4">
         <app-number-input label="از مبلغ" type="price" formControlName="fromPrice" />
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-3 mb-4">
         <app-number-input label="تا مبلغ" type="price" formControlName="toPrice" />
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-3 mb-4">
         <app-jalali-date-picker label="از تاریخ" formControlName="fromDate" />
     </div>
 

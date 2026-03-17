@@ -3,7 +3,7 @@
     position: absolute;
     top: 100%;
     right: 0;
-    z-index: 1000;
+    z-index: 999;
     width: 100%;
     max-width: 280px;
     min-width: 280px;
@@ -27,7 +27,7 @@
     font-size: 14px;
     color: #6c757d;
     transition: color 0.2s;
-    z-index: 2000;
+    z-index: 1000;
   }
 
   .days-grid {
