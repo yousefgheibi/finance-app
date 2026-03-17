@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CoreModule } from './core/core.module';
 import { ModalComponent } from './shared/components/modal/modal.component';
 import { ToastComponent } from './shared/components/toast/toast.component';
+import { ThemeServcie } from './core/services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -11,5 +12,12 @@ import { ToastComponent } from './shared/components/toast/toast.component';
   styles: ''
 })
 export class AppComponent {
+  private readonly themeService = inject(ThemeServcie);
 
+  constructor() {
+    effect(() =>{
+      this.themeService.currentTheme();
+      this.themeService.currentFontSize();
+    })
+  }
 }

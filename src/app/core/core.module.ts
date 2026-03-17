@@ -7,6 +7,7 @@ import { HeaderComponent } from './layout/header/header.component';
 import { PopoverComponent } from '../shared/components/popover/popover.component';
 import { SelectComponent } from "../shared/components/select/select.component";
 import { FormsModule } from '@angular/forms';
+import { MobileMenuComponent } from './layout/mobile-menu/mobile-menu.component';
 
 const routes: Routes = [
   {
@@ -53,7 +54,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [LayoutComponent, SidebarComponent, HeaderComponent],
+  declarations: [LayoutComponent, SidebarComponent, HeaderComponent, MobileMenuComponent],
   imports: [
     CommonModule,
     PopoverComponent,

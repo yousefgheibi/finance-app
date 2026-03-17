@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
+import { GlobalConfig } from '../../config/global-config';
 
 export interface NavItem {
   path: string;
@@ -16,13 +17,7 @@ export interface NavItem {
 export class SidebarComponent {
 
   private readonly authService = inject(AuthService);
-  protected readonly navItems: NavItem[] = [
-    { path: '/dashboard', icon: 'fa-tv', label: 'داشبورد' },
-    { path: '/my-transactions', icon: 'fa-file-invoice', label: 'تراکنش‌ها' },
-    { path: '/categories', icon: 'fa-list-alt', label: 'دسته بندی‌ها' },
-    { path: '/my-credit-cards', icon: 'fa-credit-card', label: 'کارت‌های من' },
-    { path: '/profile', icon: 'fa-user-circle', label: 'تنظیمات' },
-  ];
+  protected readonly navItems: NavItem[] = GlobalConfig.menuItems;
 
   logout(): void {
     this.authService.logout();

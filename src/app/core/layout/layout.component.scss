@@ -30,6 +30,10 @@
   height: calc(96vh - 70px);
 }
 
+app-mobile-menu {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .sidenav {
     display: none;
@@ -37,5 +41,10 @@
 
   .main-content {
     margin-right: 0;
+    margin-bottom: 70px;
+  }
+
+  app-mobile-menu {
+    display: block;
   }
 }

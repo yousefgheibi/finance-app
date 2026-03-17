@@ -1,0 +1,11 @@
+<div class="bottom-navigation-wrapper">
+    <div class="bottom-navigation">
+    <a class="nav-item" *ngFor="let item of navItems"
+         [routerLink]="item.path"
+         routerLinkActive="active"
+         [routerLinkActiveOptions]="{ exact: true }">
+      <i class="fa-solid {{ item.icon }} mb-2"></i>
+        <span class="opacity-75">{{ item.label }}</span>
+      </a>
+</div>
+</div>

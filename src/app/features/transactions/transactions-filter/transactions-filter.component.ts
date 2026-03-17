@@ -5,6 +5,7 @@ import { SelectComponent } from '../../../shared/components/select/select.compon
 import { SelectOption } from '../../../shared/models/option.model';
 import { ModalService } from '../../../shared/services/modal.service';
 import { JalaliDatePickerComponent } from "../../../shared/components/jalali-date-picker/jalali-date-picker.component";
+import { GlobalConfig } from '../../../core/config/global-config';
 
 @Component({
   selector: 'app-transactions-filter',
@@ -18,10 +19,7 @@ export class TransactionsFilterComponent implements OnInit {
   protected data = signal(null);
   protected filterForm!: FormGroup;
 
-  protected transactionsType = signal<SelectOption[]>([
-    { label: 'برداشت', value: 'withdraw' },
-    { label: 'واریز', value: 'deposit' }
-  ]);
+  protected transactionsType = signal<SelectOption[]>(GlobalConfig.transactionsTypeOptions);
 
   protected categoriesType = signal<SelectOption[] | null>(null);
   protected creditCardsType = signal<SelectOption[] | null>(null);

@@ -94,8 +94,7 @@ export class DashboardComponent implements OnInit {
         ]
       },
       options: {
-        responsive: true,
-        unit: 'تومان'
+        responsive: true
       }
     };
 

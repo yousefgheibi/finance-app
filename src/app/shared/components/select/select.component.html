@@ -16,7 +16,7 @@
         (change)="onChangeSelect($event)" 
         (blur)="onBlur()">
             <option value="" disabled selected hidden> {{ placeholder() }} </option>
-            <option [value]="null"> </option>
+            <!-- <option [value]="null"> </option> -->
             @for (opt of options(); track opt.value) {
                 <option [value]="opt.value" [selected]="opt.value === value()">
                     {{ opt.label }}
