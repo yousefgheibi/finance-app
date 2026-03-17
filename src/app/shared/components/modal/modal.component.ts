@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { ModalService } from '../../services/modal.service';
 
 @Component({
@@ -12,6 +12,7 @@ import { ModalService } from '../../services/modal.service';
 })
 export class ModalComponent {
   private readonly modalService = inject(ModalService);
+  protected isMobile = computed(() =>window.innerWidth < 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
 
   protected config = computed(() => this.modalService.modalState());
 

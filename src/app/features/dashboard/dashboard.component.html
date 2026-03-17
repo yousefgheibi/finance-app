@@ -1,7 +1,7 @@
 <div class="container-fluid p-0 h-100">
-  <div class="row g-3">
+  <div class="row g-3 mb-3">
     @for (card of financeCards(); track $index) {
-    <div class="col-md-3 mb-3">
+    <div class="col-6 col-md-3">
       <app-finance-card [title]="card.title" [cardClass]="card.cardClass" [deposit]="card.depositTotal"
         [depositWidth]="card.depositWidth" [withdrawal]="card.withdrawalTotal"
         [withdrawalWidth]="card.withdrawalWidth" />

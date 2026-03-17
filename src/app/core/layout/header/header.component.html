@@ -1,13 +1,13 @@
 <nav class="navbar navbar-expand-lg mb-2">
   <div class="container-fluid">
     <span class="text-white fs--14px">{{pageTitle()}}</span>
-    <div class="collapse navbar-collapse">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <div class="">
+      <ul class="navbar-nav me-auto">
         <li class="nav-item d-flex align-items-center ms-2 bg-white rounded-3 pointer-cursor">
-          <app-select [(ngModel)]="currentFiscalYear" (ngModelChange)="updateFiscalYear()" [options]="fiscalYears()" class="text-primary border-0 w-125px" />
+          <app-select [(ngModel)]="currentFiscalYear" (ngModelChange)="updateFiscalYear()" [options]="fiscalYears()" class="border-0" />
         </li>
         <app-popover>
-          <li class="nav-item d-flex align-items-center p-2 bg-white rounded-3 pointer-cursor w-125px" popoverTrigger>
+          <li class="nav-item d-flex align-items-center p-2 bg-white rounded-3 pointer-cursor" popoverTrigger>
             <i class="fa fa-user ms-sm-1 text-primary fs-6"></i>
             <span class="text-primary">{{ authService.user()?.firstName }} {{authService.user()?.lastName}}</span>
           </li>

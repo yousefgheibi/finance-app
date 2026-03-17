@@ -114,3 +114,10 @@ td {
 :host {
   height: 100%;
 }
+
+
+@media (max-width: 768px) {
+  tbody {
+    height: calc(100vh - 330px);
+  }
+}

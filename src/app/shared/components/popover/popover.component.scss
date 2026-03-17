@@ -19,3 +19,9 @@
 .popover-trigger {
   cursor: pointer;
 }
+
+@media (max-width: 768px) {
+  .popover-body {
+    min-width: 100px;
+  }
+}

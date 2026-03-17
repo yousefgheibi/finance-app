@@ -1,9 +1,8 @@
-import { ChangeDetectionStrategy, Component, computed, DestroyRef, effect, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { FinanceCardComponent } from '../../shared/components/finance-card/finance-card.component';
 import { Period } from '../../shared/enums/period.enum';
 import { TransactionType } from '../../shared/enums/transaction.enum';
 import { TransactionService } from '../../core/services/transaction.service';
-import { TransactionSummary } from '../../core/models/transaction-summary.model';
 import { ITransactionDto } from '../../core/models/transaction.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ToastService } from '../../shared/services/toast.service';

@@ -2,11 +2,11 @@
     <div class="shadow-sm mb-3 rounded-4 border-0 bg-white">
         <div class="p-2">
             <div class="row">
-                <div class="col-7">
+                <div class="col-md-7">
                     <app-text-input class="w-100" placeholder="جستجو" type="search" [(ngModel)]="searchTerm"
                         (ngModelChange)="onSearch()" />
                 </div>
-                <div class="col-5 text-left">
+                <div class="col-md-5 mt-2 mt-md-0 text-left">
                     <button class="btn btn-outline-primary" (click)="openFilterModal()"><i
                             class="fa-solid fa-filter"></i></button>
                     <button class="btn btn-primary mx-1" (click)="excelExport()"><i

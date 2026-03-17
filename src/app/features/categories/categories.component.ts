@@ -35,7 +35,7 @@ export class CategoriesComponent implements OnInit {
   protected data: ICategoryDto[] = [];
   protected filteredData = signal<ICategoryDto[]>([]);
   protected readonly columns: TableColumn[] = [
-    { key: 'id', label: 'شناسه', class: 'mw-75px' },
+    // { key: 'id', label: 'شناسه', class: 'mw-75px' },
     { key: 'name', label: 'نام دسته‌بندی' },
     { key: 'description', label: 'توضیحات' }
   ];

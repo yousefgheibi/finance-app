@@ -5,13 +5,13 @@
         <input type="text" formControlName="createdAt" hidden>
         <app-select label="نوع تراکنش" formControlName="type" [options]="transactionsType()" />
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6 mb-4">
         <app-select label="دسته بندی" formControlName="categoryName" [options]="categoriesType()!" />
     </div>
     <div class="col-md-6 mb-4">
         <app-select label="کارت" formControlName="cardName" [options]="creditCardsType()!" />
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6 mb-4">
         <app-number-input label="مبلغ" type="price" formControlName="price" />
     </div>
 
