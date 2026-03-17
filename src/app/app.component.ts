@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CoreModule } from './core/core.module';
 import { ModalComponent } from './shared/components/modal/modal.component';
@@ -10,13 +10,6 @@ import { ToastComponent } from './shared/components/toast/toast.component';
   templateUrl: './app.component.html',
   styles: ''
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
 
-  ngOnInit(): void {
-    const fontSize = localStorage.getItem('fontSize') || 'medium';
-    const theme = localStorage.getItem('themeColor') || 'blue';
-
-    document.body.classList.add(`font-${fontSize}`);
-    document.body.setAttribute('data-theme', theme);
-  }
 }

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, DestroyRef, inject, OnInit } from '@angular/core';
 import { TextInputComponent } from '../../shared/components/text-input/text-input.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
@@ -6,6 +6,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { ModalService } from '../../shared/services/modal.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ToastService } from '../../shared/services/toast.service';
+import { ThemeServcie } from '../../core/services/theme.service';
 
 @Component({
   selector: 'app-profile',
@@ -18,14 +19,15 @@ import { ToastService } from '../../shared/services/toast.service';
 export class ProfileComponent implements OnInit {
 
   protected profileForm!: FormGroup;
-  protected fontSize: string = 'medium';
-  protected theme: string = 'blue';
+  protected fontSize = computed(() => this.themeService.currentFontSize());
+  protected theme = computed(() => this.themeService.currentTheme());
 
   private readonly formbuilder = inject(FormBuilder);
   private readonly authService = inject(AuthService);
   private readonly modalService = inject(ModalService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly toastService = inject(ToastService);
+  private readonly themeService = inject(ThemeServcie);
 
   ngOnInit(): void {
     this.profileForm = this.formbuilder.group({
@@ -39,17 +41,6 @@ export class ProfileComponent implements OnInit {
 
     this.profileForm.patchValue(this.authService.user()!);
     this.profileForm.disable();
-
-    const savedFont = localStorage.getItem('fontSize');
-    const savedTheme = localStorage.getItem('themeColor');
-
-    if (savedFont) {
-      this.fontSize = savedFont;
-    }
-
-    if (savedTheme) {
-      this.theme = savedTheme;
-    }
   }
 
   protected submit() {
@@ -67,14 +58,11 @@ export class ProfileComponent implements OnInit {
   }
 
   protected setFontSize(size: 'small' | 'medium' | 'large' | 'xlarge') {
-    localStorage.setItem('fontSize', size);
-    document.body.classList.remove('font-small', 'font-medium', 'font-large', 'font-xlarge');
-    document.body.classList.add(`font-${size}`);
+    this.themeService.updateFontSize(size);
   }
 
   protected setTheme(color: 'blue' | 'green' | 'red') {
-    localStorage.setItem('themeColor', color);
-    document.body.setAttribute('data-theme', color);
+    this.themeService.updateTheme(color);
   }
 
   protected openChangePasswordModal() {
