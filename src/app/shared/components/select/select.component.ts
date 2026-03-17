@@ -18,6 +18,7 @@ export class SelectComponent implements ControlValueAccessor {
   options = input<SelectOption[]>([]);
   value = signal<string>('');
   disabled = signal<boolean>(false);
+  hoverd = signal<boolean>(false);
 
   private onChange: (value: string) => void = () => { };
   private onTouched: () => void = () => { };
@@ -48,13 +49,14 @@ export class SelectComponent implements ControlValueAccessor {
     const select = event.target as HTMLSelectElement;
     this.value.set(select.value);
     this.onChange(this.value());
+    this.onTouched();
   }
 
   onBlur(): void {
     this.onTouched();
   }
 
-   protected clearDate() {
+   protected clearData() {
     this.value.set('');
     this.onChange(this.value());
     this.onTouched();

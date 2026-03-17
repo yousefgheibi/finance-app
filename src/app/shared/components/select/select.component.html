@@ -5,7 +5,7 @@
     }
 }
 
-<div class="select-wrapper">
+<div class="select-wrapper" (mouseover)="hoverd.set(true)" (mouseleave)="hoverd.set(false)">
     <select class="form-select" 
         [ngClass]="{
             'is-valid': validationClass === 'is-valid',
@@ -16,14 +16,15 @@
         (change)="onChangeSelect($event)" 
         (blur)="onBlur()">
             <option value="" disabled selected hidden> {{ placeholder() }} </option>
+            <option [value]="null"> </option>
             @for (opt of options(); track opt.value) {
                 <option [value]="opt.value" [selected]="opt.value === value()">
                     {{ opt.label }}
                 </option>
             }
         </select>
-        @if (value()) {
-            <i class="fa-solid fa-xmark clear-icon" (click)="clearDate()"></i>
+        @if (value() && hoverd()) {
+            <i class="fa-solid fa-xmark clear-icon" (click)="clearData()"></i>
         }
         @else {
             <i class="fa-solid fa-chevron-down dropdown-icon"></i>
