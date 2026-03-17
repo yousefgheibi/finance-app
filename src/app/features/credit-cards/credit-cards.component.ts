@@ -37,9 +37,9 @@ export class CardsComponent implements OnInit {
   protected data: ICreditCardDto[] = [];
   protected filteredData = signal<ICreditCardDto[]>([]);
   protected readonly columns: TableColumn[] = [
-    // { key: 'id', label: 'شناسه', class: 'mw-75px' },
-    { key: 'bankName', label: 'نام بانک' , class: 'min-width-100px'},
-    { key: 'cardNumber', label: 'شماره کارت', class: 'dir-ltr text-right min-width-165px', formatter: (value: string) => this.creditCardPipe.transform(value) }
+    // { key: 'id', label: 'شناسه', class: 'max-w-75px' },
+    { key: 'bankName', label: 'نام بانک' , class: 'min-w-100px'},
+    { key: 'cardNumber', label: 'شماره کارت', class: 'dir-ltr text-right min-w-165px', formatter: (value: string) => this.creditCardPipe.transform(value) }
   ];
 
   ngOnInit(): void {

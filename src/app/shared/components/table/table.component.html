@@ -9,7 +9,7 @@
     <table class="table table-hover align-middle">
       <thead>
         <tr>
-          <th class="text-center w-75px mw-75px text-nowrap">عملیات</th>
+          <th class="text-center w-75px max-w-75px text-nowrap">عملیات</th>
           @for (col of columns(); track $index) {
           <th [ngClass]="col?.class">{{ col.label }}</th>
           }
@@ -18,7 +18,7 @@
       <tbody>
         @for (row of paginatedData(); track $index) {
         <tr>
-          <td class="text-center w-75px mw-75px">
+          <td class="text-center w-75px max-w-75px">
             <app-popover>
               <i class="fa-solid fa-ellipsis-vertical" popoverTrigger></i>
               <div popoverContent>

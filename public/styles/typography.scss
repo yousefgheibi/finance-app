@@ -1,0 +1,159 @@
+@font-face {
+    font-family: "Vazirmatn";
+    src: url('../fonts/Vazir.ttf');
+}
+
+
+.dir-rtl {
+    direction: rtl !important;
+    unicode-bidi: plaintext !important;
+}
+
+.dir-ltr {
+    direction: ltr !important;
+    unicode-bidi: plaintext !important;
+}
+
+.digits-fa {
+    font-feature-settings: "ss01", "locl" !important;
+}
+
+.digits-en {
+    font-feature-settings: "lnum" !important;
+}
+
+
+/* ------------------------------ */
+
+.fw-100 {
+    font-weight: 100 !important;
+}
+
+.fw-200 {
+    font-weight: 200 !important;
+}
+
+.fw-300 {
+    font-weight: 300 !important;
+}
+
+.fw-400 {
+    font-weight: 400 !important;
+}
+
+.fw-500 {
+    font-weight: 500 !important;
+}
+
+.fw-600 {
+    font-weight: 600 !important;
+}
+
+.fw-700 {
+    font-weight: 700 !important;
+}
+
+.fw-800 {
+    font-weight: 800 !important;
+}
+
+.fw-900 {
+    font-weight: 900 !important;
+}
+
+/* ------------------------------ */
+
+.fs-10 {
+    font-size: .625rem !important;
+}
+
+.fs-11 {
+    font-size: .6875rem !important;
+}
+
+.fs-12 {
+    font-size: .75rem !important;
+}
+
+.fs-13 {
+    font-size: .8125rem !important;
+}
+
+.fs-14 {
+    font-size: .875rem !important;
+}
+
+.fs-15 {
+    font-size: .9375rem !important;
+}
+
+.fs-16 {
+    font-size: 1rem !important;
+}
+
+.fs-18 {
+    font-size: 1.125rem !important;
+}
+
+.fs-20 {
+    font-size: 1.25rem !important;
+}
+
+.fs-24 {
+    font-size: 1.5rem !important;
+}
+
+.fs-28 {
+    font-size: 1.75rem !important;
+}
+
+.fs-32 {
+    font-size: 2rem !important;
+}
+
+/* ------------------------------ */
+
+.text-justify {
+    text-align: justify !important;
+}
+
+.text-left {
+    text-align: left !important;
+}
+
+.text-right {
+    text-align: right !important;
+}
+
+.text-balance {
+    text-wrap: balance !important;
+}
+
+.text-nowrap {
+    white-space: nowrap !important;
+}
+
+/* ------------------------------ */
+
+.text-primary {
+    color: var(--primary-color) !important;
+}
+
+
+/* ------------------------------ */
+
+.font-small {
+    font-size: 12px;
+}
+
+.font-medium {
+    font-size: 14px;
+}
+
+.font-large {
+    font-size: 18px;
+}
+
+.font-xlarge {
+    font-size: 22px;
+}

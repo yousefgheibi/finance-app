@@ -49,12 +49,12 @@ export class TransactionsComponent implements OnInit {
   protected data: ITransactionDto[] = [];
   protected filteredData = signal<ITransactionDto[]>([]);
   protected readonly columns: TableColumn[] = [
-    { key: 'type', label: 'نوع', class: 'min-width-100px',formatter: (value: string) => value == TransactionType.Withdrawal ? 'برداشت' : 'واریز' },
-    { key: 'categoryName', label: 'دسته‌بندی', class: 'min-width-100px', formatter: (value: string) => this.categoriesType()?.find(c => c.value === value)?.label ?? '' },
-    { key: 'price', label: 'مبلغ',class: 'min-width-175px', formatter: (value: string) => Number(value).toLocaleString() + ' تومان' },
-    { key: 'cardName', label: 'شماره کارت',class: 'min-width-200px', formatter: (value: string) => this.creditCardsType()?.find(c => c.value === value)?.label ?? '' },
-    { key: 'createdAt', label: 'تاریخ ایجاد',class: 'min-width-150px dir-ltr text-right', formatter: (value: string) => this.persianDatePipe.transform(value, 'datetime') },
-    { key: 'description', label: 'توضیحات',class: 'min-width-100px', formatter: (value: string) => value ?? '-' }
+    { key: 'type', label: 'نوع', class: 'min-w-100px',formatter: (value: string) => value == TransactionType.Withdrawal ? 'برداشت' : 'واریز' },
+    { key: 'categoryName', label: 'دسته‌بندی', class: 'min-w-100px', formatter: (value: string) => this.categoriesType()?.find(c => c.value === value)?.label ?? '' },
+    { key: 'price', label: 'مبلغ',class: 'min-w-175px', formatter: (value: string) => Number(value).toLocaleString() + ' تومان' },
+    { key: 'cardName', label: 'شماره کارت',class: 'min-w-200px', formatter: (value: string) => this.creditCardsType()?.find(c => c.value === value)?.label ?? '' },
+    { key: 'createdAt', label: 'تاریخ ایجاد',class: 'min-w-150px dir-ltr text-right', formatter: (value: string) => this.persianDatePipe.transform(value, 'datetime') },
+    { key: 'description', label: 'توضیحات',class: 'min-w-100px', formatter: (value: string) => value ?? '-' }
   ];
 
   ngOnInit(): void {

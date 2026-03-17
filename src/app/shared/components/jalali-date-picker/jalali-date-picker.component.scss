@@ -40,7 +40,7 @@
       height: 33px;
       line-height: 33px;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: var(--transition);
 
       &:hover {
         background-color: #0d6efd;
