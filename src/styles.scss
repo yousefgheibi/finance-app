@@ -71,3 +71,8 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #34476724;
 }
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 500ms;
+}
