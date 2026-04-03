@@ -6,6 +6,7 @@ export interface NavItem {
   path: string;
   icon: string;
   label: string;
+  order: number;
 }
 
 @Component({
@@ -17,7 +18,7 @@ export interface NavItem {
 export class SidebarComponent {
 
   private readonly authService = inject(AuthService);
-  protected readonly navItems: NavItem[] = GlobalConfig.menuItems;
+  protected readonly navItems: NavItem[] = GlobalConfig.menuItems.sort((a,b)=> a.order - b.order);
 
   logout(): void {
     this.authService.logout();
