@@ -1,6 +1,7 @@
 .popover-wrapper {
   position: relative;
   display: inline-block;
+  height: 100%;
 }
 
 .popover-body {
@@ -18,6 +19,7 @@
 
 .popover-trigger {
   cursor: pointer;
+  height: 100%;
 }
 
 @media (max-width: 768px) {

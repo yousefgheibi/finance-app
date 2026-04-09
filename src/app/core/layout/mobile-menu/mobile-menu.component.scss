@@ -4,7 +4,7 @@
     left: 0;
     z-index: 1000;
     width: 100%;
-    padding: 8px 16px;
+    // padding: 8px 16px;
 }
 
 .bottom-navigation {
@@ -13,7 +13,7 @@
     align-items: center;
     width: 100%;
     background-color: var(--bs-primary);
-    border-radius: 12px;
+    border-radius: 8px 8px 0 0;
     padding: 8px;
 }
 

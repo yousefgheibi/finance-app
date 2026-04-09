@@ -15,6 +15,10 @@ export class AppComponent {
   private readonly themeService = inject(ThemeServcie);
 
   constructor() {
+    if(!this.themeService.currentTheme()){
+      this.themeService.updateTheme('blue');
+      this.themeService.updateFontSize('font-medium');
+    }
     effect(() =>{
       this.themeService.currentTheme();
       this.themeService.currentFontSize();

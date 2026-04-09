@@ -117,6 +117,12 @@
 
 
 /* ------------------------------- */
-.form-control , .form-select{
+.form-control, .form-select {
   height: 40px;
+}
+
+@media (max-width:768px) {
+  .rounded-4 {
+    border-radius: 0.6rem !important;
+  }
 }

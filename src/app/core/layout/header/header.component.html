@@ -7,7 +7,7 @@
           <app-select [(ngModel)]="currentFiscalYear" (ngModelChange)="updateFiscalYear()" [options]="fiscalYears()" class="border-0 w-100 m-0" />
         </li>
         <app-popover>
-          <li class="nav-item d-flex align-items-center p-2 bg-white rounded-3 pointer-cursor" popoverTrigger>
+          <li class="nav-item d-flex align-items-center p-2 bg-white rounded-3 pointer-cursor h-100" popoverTrigger>
             <i class="fa fa-user ms-sm-1 text-primary fs-6"></i>
             <span class="text-primary">{{ authService.user()?.firstName }} {{authService.user()?.lastName}}</span>
           </li>
