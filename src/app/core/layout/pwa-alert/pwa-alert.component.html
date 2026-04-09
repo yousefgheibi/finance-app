@@ -1,0 +1,12 @@
+@if(showInstallPrompt() && isMobile()){
+<div class="install-prompt shadow rounded-3 px-2 py-3">
+    <div>
+        <p class="mb-0 fs-13">دریافت اپلیکیشن</p>
+        <span class="fs-10">تجربه استفاده بهتر</span>
+    </div>
+    <div>
+        <button class="btn btn-primary fs-13 mx-1" (click)="installPWA()">نصب</button>
+        <button class="btn btn-outline-primary fs-13" (click)="dismissPrompt()">بعداً</button>
+    </div>
+</div>
+}

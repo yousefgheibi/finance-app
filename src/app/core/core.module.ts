@@ -8,6 +8,7 @@ import { PopoverComponent } from '../shared/components/popover/popover.component
 import { SelectComponent } from "../shared/components/select/select.component";
 import { FormsModule } from '@angular/forms';
 import { MobileMenuComponent } from './layout/mobile-menu/mobile-menu.component';
+import { PwaAlertComponent } from './layout/pwa-alert/pwa-alert.component';
 
 const routes: Routes = [
   {
@@ -54,7 +55,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [LayoutComponent, SidebarComponent, HeaderComponent, MobileMenuComponent],
+  declarations: [LayoutComponent, SidebarComponent, HeaderComponent, MobileMenuComponent, PwaAlertComponent],
   imports: [
     CommonModule,
     PopoverComponent,
