@@ -37,3 +37,10 @@
   cursor: pointer;
   font-size: 1rem;
 }
+
+@media (max-width:768px) {
+  h5{
+    font-size: 1.1rem;
+  }
+  
+}
