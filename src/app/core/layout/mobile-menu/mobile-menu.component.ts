@@ -10,5 +10,5 @@ import { GlobalConfig } from '../../config/global-config';
 })
 export class MobileMenuComponent {
   
-    protected readonly navItems: NavItem[] = GlobalConfig.menuItems;
+    protected readonly navItems: NavItem[] = GlobalConfig.mobileMenuItems.sort((a,b)=> a.order - b.order);
 }
