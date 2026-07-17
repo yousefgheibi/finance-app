@@ -18,14 +18,25 @@ export class AuthService {
     private _isLoggedIn = signal(false);
     isLoggedIn = this._isLoggedIn.asReadonly();
 
+    private _isGuest = signal(false);
+    isGuest = this._isGuest.asReadonly();
+
     constructor(
         private http: HttpClient,
         private router: Router
     ) {
         this.initAuth();
     }
-
+    
     private initAuth() {
+        const isGuest = localStorage.getItem('isGuest');
+
+        if (isGuest === 'true') {
+            this._isGuest.set(true);
+            this._isLoggedIn.set(true);
+            return;
+        }
+
         const user = localStorage.getItem('user');
 
         if (!user) {
@@ -73,8 +84,10 @@ export class AuthService {
 
     logout() {
         localStorage.removeItem('user');
+        localStorage.removeItem('isGuest');
 
         this._user.set(null);
+        this._isGuest.set(false);
         this._isLoggedIn.set(false);
 
         this.router.navigate(['/login']);
@@ -118,5 +131,15 @@ export class AuthService {
                 this._user.set(newUser);
             })
         );
+    }
+
+    
+    loginAsGuest() {
+        localStorage.removeItem('user');
+        localStorage.setItem('isGuest', 'true');
+
+        this._user.set(null);
+        this._isGuest.set(true);
+        this._isLoggedIn.set(true);
     }
 }

@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
 
   protected pageTitle = signal('');
   protected fiscalYears = signal<SelectOption[]>(GlobalConfig.fiscalYearsOptions);
-  protected currentFiscalYear = '';
+  protected currentFiscalYear = '1405';
 
   ngOnInit() {
     this.router.events

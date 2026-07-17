@@ -87,5 +87,10 @@ export class LoginComponent implements OnInit {
         }
       });
   }
+
+  protected loginAsGuest() {
+    this.authService.loginAsGuest();
+    this.router.navigate(['/dashboard']);
+  }
 }
 
