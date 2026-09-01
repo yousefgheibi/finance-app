@@ -1,5 +1,4 @@
-import { Component, inject } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
+import { Component } from '@angular/core';
 import { GlobalConfig } from '../../config/global-config';
 
 export interface NavItem {
@@ -16,11 +15,5 @@ export interface NavItem {
   styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent {
-
-  private readonly authService = inject(AuthService);
-  protected readonly navItems: NavItem[] = GlobalConfig.menuItems.sort((a,b)=> a.order - b.order);
-
-  logout(): void {
-    this.authService.logout();
-  }
+  protected readonly navItems: NavItem[] = GlobalConfig.menuItems.sort((a, b) => a.order - b.order);
 }

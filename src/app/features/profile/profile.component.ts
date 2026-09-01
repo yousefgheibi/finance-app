@@ -1,10 +1,7 @@
-import { ChangeDetectionStrategy, Component, computed, DestroyRef, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, OnInit } from '@angular/core';
 import { TextInputComponent } from '../../shared/components/text-input/text-input.component';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
-import { ChangePasswordComponent } from './change-password/change-password.component';
-import { ModalService } from '../../shared/services/modal.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ToastService } from '../../shared/services/toast.service';
 import { ThemeServcie } from '../../core/services/theme.service';
 
@@ -18,43 +15,28 @@ import { ThemeServcie } from '../../core/services/theme.service';
 })
 export class ProfileComponent implements OnInit {
 
-  protected profileForm!: FormGroup;
-  protected fontSize = computed(() => this.themeService.currentFontSize());
-  protected theme = computed(() => this.themeService.currentTheme());
-
   private readonly formbuilder = inject(FormBuilder);
   private readonly authService = inject(AuthService);
-  private readonly modalService = inject(ModalService);
-  private readonly destroyRef = inject(DestroyRef);
   private readonly toastService = inject(ToastService);
   private readonly themeService = inject(ThemeServcie);
 
+  protected profileForm!: FormGroup;
+  protected fontSize = computed(() => this.themeService.currentFontSize());
+  protected theme = computed(() => this.themeService.currentTheme());
+  protected user = this.authService.user;
+  protected isGuest = this.authService.isGuest;
+
   ngOnInit(): void {
     this.profileForm = this.formbuilder.group({
-      id: [null],
-      firstName: [null, [Validators.required]],
-      lastName: [null, [Validators.required]],
-      nationalCode: [null],
-      phoneNumber: [null, [Validators.required]],
-      password: [null, [Validators.required]]
-    })
+      nationalCode: [null]
+    });
 
-    this.profileForm.patchValue(this.authService.user()!);
-    this.profileForm.disable();
+    this.profileForm.patchValue({ nationalCode: this.authService.user()?.nationalCode ?? null });
   }
 
   protected submit() {
-    this.authService.updateUser(this.profileForm.getRawValue())
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: () => {
-          this.profileForm.disable();
-          this.toastService.success('ویرایش اطلاعات با موفقیت انجام شد.');
-        },
-        error: () => {
-          this.toastService.error('خطا در ویرایش اطلاعات');
-        }
-      });
+    this.authService.updateUser({ nationalCode: this.profileForm.getRawValue().nationalCode });
+    this.toastService.success('ویرایش اطلاعات با موفقیت انجام شد.');
   }
 
   protected setFontSize(size: 'small' | 'medium' | 'large' | 'xlarge') {
@@ -63,13 +45,5 @@ export class ProfileComponent implements OnInit {
 
   protected setTheme(color: 'blue' | 'green' | 'red') {
     this.themeService.updateTheme(color);
-  }
-
-  protected openChangePasswordModal() {
-    this.modalService.open({
-      component: ChangePasswordComponent,
-      title: 'تغییر رمز عبور',
-      size: 'md'
-    });
   }
 }

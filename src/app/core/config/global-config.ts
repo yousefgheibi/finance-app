@@ -1,6 +1,4 @@
 export class GlobalConfig {
-  static apiUrl = 'http://localhost:3000';
-
   static fiscalYearsOptions = [
     { label: '1405', value: '1405' },
     { label: '1404', value: '1404' },

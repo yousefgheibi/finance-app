@@ -8,18 +8,19 @@
         </li>
         <app-popover>
           <li class="nav-item d-flex align-items-center p-2 bg-white rounded-3 pointer-cursor h-100" popoverTrigger>
-            <i class="fa fa-user ms-sm-1 text-primary fs-6"></i>
-            <span class="text-primary">{{ authService.user() ? (authService.user()?.firstName + ' ' + authService.user()?.lastName) : 'کاربر مهمان' }}</span>
+             @if (authService.user()?.photoUrl) {
+              <img [src]="authService.user()?.photoUrl" class="rounded-circle ms-2" width="26" height="26" alt="">
+            }
+            @else {
+              <i class="fa fa-user ms-2 text-primary fs-6"></i>
+            }
+            <span class="text-primary">{{ authService.user()?.firstName ? (authService.user()?.firstName + ' ' + authService.user()?.lastName) : 'کاربر مهمان' }}</span>
           </li>
           <div popoverContent>
             <ul class="p-2">
-              <li class="nav-item d-flex align-items-center mb-3 pointer-cursor" (click)="goToProfile()">
+              <li class="nav-item d-flex align-items-center pointer-cursor" (click)="goToProfile()">
                 <i class="fa fa-cog ms-sm-1 text-primary fs-14 opacity-75"></i>
                 <span class="text-primary fs-14">تنظیمات</span>
-              </li>
-              <li class="nav-item d-flex align-items-center pointer-cursor" (click)="logout()">
-                <i class="fa fa-sign-out ms-sm-1 text-danger fs-14 opacity-75"></i>
-                <span class="text-danger fs-14">خروج</span>
               </li>
             </ul>
           </div>

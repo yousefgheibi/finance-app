@@ -1,8 +1,8 @@
 export interface IUserDto {
-    id?: number;
+    telegramId?: number;
     firstName: string;
-    lastName: string;
+    lastName?: string;
+    username?: string;
+    photoUrl?: string;
     nationalCode?: string;
-    phoneNumber: string;
-    password: string;
 }

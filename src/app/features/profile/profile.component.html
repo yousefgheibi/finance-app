@@ -1,43 +1,40 @@
 <div class="container-fluid">
     <div class="row shadow-sm rounded-4 px-0 px-md-6 py-4 py-md-6 bg-white justify-content-between">
-        <div class="col-8 col-md-11">
+        <div class="col-12 mb-4">
             <span class="text-primary fw-semibold fs-18">اطلاعات شخصی</span>
         </div>
-        <div class="col-4 col-md-1 d-flex align-items-center pointer-cursor">
-            @if (profileForm.disabled) {
-            <button class="btn d-flex align-items-center" (click)="profileForm.enable()">
-                <i class="fa-solid opacity-75 fa-pencil text-primary mx-1"></i>
-                <span class="fs-14 text-primary">ویرایش</span>
-            </button>
+
+        @if (!isGuest()) {
+        <div class="col-12 d-flex align-items-center mb-4">
+            @if (user()?.photoUrl) {
+            <img [src]="user()?.photoUrl" class="rounded-circle ms-3" width="56" height="56" alt="">
             }
+            <div>
+                <div class="fw-semibold">{{ user()?.firstName }} {{ user()?.lastName }}</div>
+                @if (user()?.username) {
+                <div class="text-muted fs-14">&#64;{{ user()?.username }}</div>
+                }
+            </div>
         </div>
+        } @else {
+        <div class="col-12 mb-4">
+            <span class="text-muted fs-14">برنامه خارج از تلگرام باز شده، در حالت مهمان هستید.</span>
+        </div>
+        }
 
         <form class="row m-0 p-0 gy-4" [formGroup]="profileForm" (ngSubmit)="submit()">
-            <input type="text" formControlName="id" hidden>
-            <div class="col-md-6">
-                <app-text-input label="نام" type="text" formControlName="firstName" />
-            </div>
-            <div class="col-md-6">
-                <app-text-input label="نام خانوادگی" type="text" formControlName="lastName" />
-            </div>
-            <div class="col-md-6">
-                <app-text-input label="شماره موبایل" type="text" formControlName="phoneNumber" />
-            </div>
             <div class="col-md-6">
                 <app-text-input label="کد ملی" type="text" formControlName="nationalCode" />
             </div>
-            @if (!profileForm.disabled) {
+
             <div class="col-md-12 text-left mt-4">
-                <button class="btn btn-outline-primary mx-2" type="button"
-                    (click)="profileForm.disable()">انصراف</button>
                 <button class="btn btn-primary" type="submit">ذخیره</button>
             </div>
-            }
         </form>
     </div>
 
     <div class="row my-md-3 justify-content-between">
-        <div class="col-md-9 my-3 my-md-0 ps-md-3">
+        <div class="col-12 my-3 my-md-0">
             <div class="row shadow-sm rounded-4 px-0 px-md-6 py-4 py-md-6 bg-white">
 
                 <div class="col-12 mb-3">
@@ -103,14 +100,6 @@
                     </div>
                 </div>
 
-            </div>
-        </div>
-        <div class="col-md-3 pe-md-4">
-            <div
-                class="row shadow-sm rounded-4 px-3 px-md-6 py-5 bg-white h-100 d-flex align-items-center justify-content-center">
-                <div class="col-12 text-center">
-                    <button class="btn btn-primary" (click)="openChangePasswordModal()">تغییر رمز عبور</button>
-                </div>
             </div>
         </div>
     </div>

@@ -51,8 +51,4 @@ export class HeaderComponent implements OnInit {
   protected updateFiscalYear() {
     this.fiscalYearService.updateFiscalYear(this.currentFiscalYear);
   }
-
-  logout(): void {
-    this.authService.logout();
-  }
 }
